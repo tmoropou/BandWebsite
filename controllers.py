@@ -42,6 +42,16 @@ def index():
     # On top of the table there is a button to insert a new bird.
     return dict()
 
+@action('about')
+@action.uses(db, auth, 'about.html')
+def about():
+    return dict()
+
+@action('merch')
+@action.uses(db, auth, 'merch.html')
+def about():
+    return dict()
+
 # This is an example only, to be used as inspiration for your code to increment the bird count.
 # Note that the bird_id parameter ...
 @action('capitalize/<bird_id:int>') # the :int means: please convert this to an int.
