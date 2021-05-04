@@ -42,9 +42,26 @@ def index():
     # On top of the table there is a button to insert a new bird.
     return dict()
 
+@action('admin')
+@action.uses(db, session, auth.user, 'admin.html')
+def index():
+    admin = "max.nibler@gmail.com"
+    user = get_user_email()
+    #send user back to home page if not admin
+    if admin != user:
+        redirect(URL('index'))
+    return dict(
+        admin=admin,
+        url_signer=url_signer
+    )
+
+@action('adminButton')
+@action.uses(db, session, auth.user, url_signer.verify())
 @action('about')
 @action.uses(db, auth, 'about.html')
 def about():
+    print('admin method')
+    redirect(URL('admin'))
     return dict()
 
 @action('merch')

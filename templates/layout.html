@@ -42,6 +42,7 @@
       <div id="the-navbar-menu" class="navbar-menu">
         <div 
           class="navbar-start"
+          id="vue-target"
         >
           <a class="navbar-item" href="[[=URL('index')]]">
             Home
@@ -58,6 +59,15 @@
           <a class="navbar-item" href="[[=URL('about')]]">
             Bio
           </a>
+          [[if globals().get('user'):]]
+            <a 
+              class="navbar-item" 
+              v-if="'max.nibler@gmail.com' === '[[=globals().get('user').get('email')]]'"
+              href="[[=URL('admin')]]"
+            >
+              admin
+            </a>
+          [[pass]]
         </div>
 
         <div class="navbar-end">
@@ -76,7 +86,7 @@
                   <a class="navbar-link is-primary">
                     [[=globals().get('user').get('email')]]
                   </a>
-                  <div class="navbar-dropdown">
+                  <div class="navbar-dropdown is-dark">
                     <a class="navbar-item" href="[[=URL('auth/logout')]]">Logout</a>
                     <a class="navbar-item" href="[[=URL('auth/profile')]]">Profile</a>
                     <a class="navbar-item" href="[[=URL('auth/change_password')]]">Change Password</a></li>
@@ -138,5 +148,6 @@
   <script src="js/axios.min.js"></script>
   <script src="js/vue.js"></script>
   <script src="js/utils.js"></script>
+  <script src="js/index.js"></script>
   [[block page_scripts]]<!-- individual pages can add scripts here -->[[end]]
 </html>
