@@ -35,3 +35,41 @@ CREATE TABLE "bird"(
     "seen_by" CHAR(512)
 );
 success!
+timestamp: 2021-05-05T17:42:00.750552
+CREATE TABLE "birds"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "bird_count" INTEGER,
+    "seen_by" CHAR(512)
+);
+success!
+timestamp: 2021-05-05T17:43:44.839716
+CREATE TABLE "account"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_email" CHAR(512),
+    "admin" INTEGER
+);
+success!
+timestamp: 2021-05-05T18:02:57.697161
+ALTER TABLE "account" ADD "user_password" CHAR(512);
+success!
+timestamp: 2021-05-05T18:17:20.371001
+ALTER TABLE "account" ADD "user_nickname" CHAR(512);
+timestamp: 2021-05-05T18:17:20.372840
+ALTER TABLE "account" ADD "user_profile_image" CHAR(512);
+success!
+timestamp: 2021-05-05T18:20:52.461267
+ALTER TABLE "account" ADD "user_admin" INTEGER;
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
