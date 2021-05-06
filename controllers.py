@@ -94,6 +94,25 @@ def profile():
 
     return dict(name=name, form=form, row=row)
 
+@action('edit_profile', method=["GET", "POST"])
+@action.uses(db, session, auth.user, 'edit_profile.html')
+def edit_profile():
+    # Get users first name
+    rows = db(db.account.user_email == get_user_email()).select()
+    row = rows[0]
+    name = row.user_first_name
+
+    p = db(db.account.user_email == get_user_email()).select()
+    x = p[0]
+
+    p = db.account[x.id]
+    form = Form(db.account, record=p, deletable=False, csrf_session=session, formstyle=FormStyleBulma)
+
+    if form.accepted:
+        redirect(URL('profile'))
+
+    return dict(form=form, name=name)
+
 # This is an example only, to be used as inspiration for your code to increment the bird count.
 # Note that the bird_id parameter ...
 @action('capitalize/<bird_id:int>') # the :int means: please convert this to an int.

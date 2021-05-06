@@ -40,12 +40,12 @@ db.define_table(
 ### Define the user account table
 db.define_table(
     'account',
-    Field('user_email', default=get_user_email()),
+    Field('user_email', label="E-mail", default=get_user_email()),
     Field('user_password', default=get_user_password()),
-    Field('user_first_name', default=get_user_first_name()),
-    Field('user_last_name', default=get_user_last_name()),
-    Field('user_username'),
-    Field('user_profile_image'),
+    Field('user_first_name', label="First Name", default=get_user_first_name()),
+    Field('user_last_name', label="Last Name", default=get_user_last_name()),
+    Field('user_username', label="Username"),
+    Field('user_profile_image', label="Profile Image"),
     Field('user_admin', 'integer', default=0),
     )
 
