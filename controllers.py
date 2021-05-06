@@ -90,9 +90,8 @@ def profile():
     x = p[0]
 
     p = db.account[x.id]
-    form = Form(db.account, record=p, deletable=False, csrf_session=session, formstyle=FormStyleBulma)
 
-    return dict(name=name, form=form, row=row)
+    return dict(name=name, row=row)
 
 @action('edit_profile', method=["GET", "POST"])
 @action.uses(db, session, auth.user, 'edit_profile.html')
@@ -112,13 +111,3 @@ def edit_profile():
         redirect(URL('profile'))
 
     return dict(form=form, name=name)
-
-# This is an example only, to be used as inspiration for your code to increment the bird count.
-# Note that the bird_id parameter ...
-@action('capitalize/<bird_id:int>') # the :int means: please convert this to an int.
-@action.uses(db, auth.user, url_signer.verify())
-# ... has to match the bird_id parameter of the Python function here.
-def capitalize(bird_id=None):
-    assert bird_id is not None
-    bird = db.bird[bird_id]
-    db(db.bird.id == bird_id).update(bird_name=bird.bird_name.capitalize())
