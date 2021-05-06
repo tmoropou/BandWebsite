@@ -86,11 +86,10 @@
                   <a class="navbar-link is-primary">
                     [[=globals().get('user').get('email')]]
                   </a>
-                  <div class="navbar-dropdown is-dark">
-                    <a class="navbar-item" href="[[=URL('auth/logout')]]">Logout</a>
-                    <a class="navbar-item" href="[[=URL('auth/profile')]]">Profile</a>
-                    <a class="navbar-item" href="[[=URL('auth/change_password')]]">Change Password</a></li>
-  
+                    <div class="navbar-dropdown is-dark">
+                      <a class="dropdown-item" href="[[=URL('auth/logout')]]">Logout</a>
+                      <a class="navbar-item" href="[[=URL('profile')]]">Profile</a>
+                      <a class="navbar-item" href="[[=URL('auth/change_password')]]">Change Password</a></li>
                   </div>
                 </div>
               [[else:]]

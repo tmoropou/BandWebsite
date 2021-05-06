@@ -29,7 +29,8 @@ from py4web import action, request, abort, redirect, URL
 from yatl.helpers import A
 from .common import db, session, T, cache, auth, logger, authenticated, unauthenticated, flash
 from py4web.utils.url_signer import URLSigner
-from .models import get_user_email, get_user_password
+from .models import get_user_email, get_user_password, get_user_first_name, get_user_last_name
+from py4web.utils.form import Form, FormStyleBulma
 
 url_signer = URLSigner(session)
 
@@ -42,18 +43,22 @@ def index():
     # On top of the table there is a button to insert a new bird.
 
     db.account.update_or_insert(user_email=get_user_email(),
-                                user_password=get_user_password())
+                                user_password=get_user_password(),
+                                user_first_name=get_user_first_name(),
+                                user_last_name=get_user_last_name())
 
-    return dict()
+    return dict(url_signer=url_signer)
 
 @action('admin')
 @action.uses(db, session, auth.user, 'admin.html')
-def index():
+def admin_index():
     admin = "max.nibler@gmail.com"
     user = get_user_email()
     #send user back to home page if not admin
     if admin != user:
         redirect(URL('index'))
+
+    account = db(db.account.user_email == get_user_email()).select()
     return dict(
         admin=admin,
         url_signer=url_signer
@@ -72,6 +77,22 @@ def about():
 @action.uses(db, auth, 'merch.html')
 def about():
     return dict()
+
+@action('profile', method=["GET", "POST"])
+@action.uses(db, session, auth.user, 'profile.html')
+def profile():
+    # Get users first name
+    rows = db(db.account.user_email == get_user_email()).select()
+    row = rows[0]
+    name = row.user_first_name
+
+    p = db(db.account.user_email == get_user_email()).select()
+    x = p[0]
+
+    p = db.account[x.id]
+    form = Form(db.account, record=p, deletable=False, csrf_session=session, formstyle=FormStyleBulma)
+
+    return dict(name=name, form=form, row=row)
 
 # This is an example only, to be used as inspiration for your code to increment the bird count.
 # Note that the bird_id parameter ...
