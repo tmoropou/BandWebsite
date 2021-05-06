@@ -4,6 +4,7 @@ This file defines the database models
 
 import datetime
 from .common import db, Field, auth
+from py4web import URL
 from pydal.validators import *
 
 
@@ -22,7 +23,6 @@ def get_user_last_name():
 def get_time():
     return datetime.datetime.utcnow()
 
-print(auth.current_user.get('id'))
 
 ### Define your table below
 #
@@ -45,7 +45,7 @@ db.define_table(
     Field('user_first_name', label="First Name", default=get_user_first_name()),
     Field('user_last_name', label="Last Name", default=get_user_last_name()),
     Field('user_username', label="Username"),
-    Field('user_profile_image', label="Profile Image"),
+    Field('picture', 'upload', download_url=None),
     Field('user_admin', 'integer', default=0),
     )
 
