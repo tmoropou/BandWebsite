@@ -1,0 +1,22 @@
+[[extend 'layout.html']]
+
+<div class="section has-background-dark is-justify-content-center">
+        <h1 class="title is-1 has-text-white has-text-centered">[[=name]]'s Profile</h1>
+
+    <!-- Profile picture -->
+    <div class="columns is-centered is-vcentered is-mobile">
+        <img class="image mt-3 is-128x128 is-justify-content-center has-background-dark" src="images/placeholder_profile_picture.png">
+        <!-- placeholder image -->
+
+    </div>
+
+    <!-- User Info -->
+    <div class="section ml-6">
+        <div class="title mt-6 is-5 has-text-white ml-6"> E-mail: [[=row.user_email]]</div>
+        <div class="title is-5 has-text-white ml-6"> Name: [[=row.user_first_name]] [[=row.user_last_name]]</div>
+        <div class="title is-5 has-text-white ml-6"> Username: [[=row.user_username]]</div>
+        <a class="button is-primary ml-6" href="[[=URL('auth/change_password')]]">Change Password</a></li>
+    </div>
+
+
+</div>
