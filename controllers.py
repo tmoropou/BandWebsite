@@ -29,7 +29,7 @@ from py4web import action, request, abort, redirect, URL
 from yatl.helpers import A
 from .common import db, session, T, cache, auth, logger, authenticated, unauthenticated, flash
 from py4web.utils.url_signer import URLSigner
-from .models import get_user_email
+from .models import get_user_email, get_user_password
 
 url_signer = URLSigner(session)
 
@@ -40,6 +40,10 @@ def index():
     # The table must have an edit button to edit a row, and also, a +1 button to increase the count
     # by 1 (this needs to be protected by a signed URL).
     # On top of the table there is a button to insert a new bird.
+
+    db.account.update_or_insert(user_email=get_user_email(),
+                                user_password=get_user_password())
+
     return dict()
 
 @action('admin')
