@@ -64,6 +64,7 @@ def admin_index():
 
 @action('adminButton')
 @action.uses(db, session, auth.user, url_signer.verify())
+
 @action('about')
 @action.uses(db, auth, 'about.html')
 def about():
@@ -73,7 +74,13 @@ def about():
 
 @action('merch')
 @action.uses(db, auth, 'merch.html')
-def about():
+def merch():
+    return dict()
+
+@action('video')
+@action.uses(db, auth, 'video.html')
+def video():
+    URL = "https://www.youtube.com/embed/qEkmd1IXq-Y"
     return dict()
 
 @action('profile', method=["GET", "POST"])
