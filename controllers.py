@@ -37,10 +37,6 @@ url_signer = URLSigner(session)
 @action('index')
 @action.uses(db, auth, 'index.html')
 def index():
-    ## TODO: Show to each logged in user the birds they have seen with their count.
-    # The table must have an edit button to edit a row, and also, a +1 button to increase the count
-    # by 1 (this needs to be protected by a signed URL).
-    # On top of the table there is a button to insert a new bird.
 
     db.account.update_or_insert(user_email=get_user_email(),
                                 user_password=get_user_password(),
@@ -52,13 +48,15 @@ def index():
 @action('admin')
 @action.uses(db, session, auth.user, 'admin.html')
 def admin_index():
-    admin = "max.nibler@gmail.com"
-    user = get_user_email()
-    #send user back to home page if not admin
-    if admin != user:
-        redirect(URL('index'))
+    admins = db(db.account.user_admin == 1).select()
 
-    account = db(db.account.user_email == get_user_email()).select()
+    # Checks if user is one of the admins
+    userIsAdmin = False
+    for admin in admins:
+        if admin.user_email == get_user_email():
+            userIsAdmin = True
+    if userIsAdmin == False:
+        redirect(URL('index'))
     return dict(
         admin=admin,
         url_signer=url_signer

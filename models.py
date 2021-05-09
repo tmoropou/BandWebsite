@@ -30,13 +30,6 @@ def get_time():
 #
 ## always commit your models to avoid problems later
 
-db.define_table(
-    'bird',
-    ### TODO: define the fields that are in the json.
-    Field('bird_count', 'integer'),
-    Field('seen_by', default=get_user_email()),
-)
-
 ### Define the user account table
 db.define_table(
     'account',
