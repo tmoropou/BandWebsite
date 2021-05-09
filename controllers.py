@@ -80,8 +80,9 @@ def merch():
 @action('video')
 @action.uses(db, auth, 'video.html')
 def video():
-    URL = "https://www.youtube.com/embed/qEkmd1IXq-Y"
-    return dict()
+    food = "https://www.youtube.com/embed/qEkmd1IXq-Y"
+    overview = "https://www.youtube.com/embed/2nfYTyUnfM0"
+    return dict(thevideo=overview)
 
 @action('profile', method=["GET", "POST"])
 @action.uses(db, session, auth.user, 'profile.html')
