@@ -46,4 +46,11 @@ db.account.id.readable = db.account.id.writable = False
 db.account.user_password.writable = db.account.user_password.readable = False
 db.account.user_admin.writable = db.account.user_admin.readable = False
 
+### Define Video Address table
+db.define_table(
+    'video',
+    Field('video_name', requires=IS_NOT_EMPTY()),
+    Field('video_url', requires=IS_URL())
+)
+
 db.commit()

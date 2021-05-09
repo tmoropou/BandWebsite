@@ -389,3 +389,18 @@ success!
 success!
 success!
 success!
+success!
+timestamp: 2021-05-09T15:51:11.676463
+CREATE TABLE "video"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "video_name" CHAR(512),
+    "video_url" CHAR(512)
+);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
