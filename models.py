@@ -56,5 +56,6 @@ db.define_table(
 )
 
 db.video.creation_time.writable = db.video.creation_time.readable = False
+db.video.front.writable = db.video.front.readable = False
 
 db.commit()

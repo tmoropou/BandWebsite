@@ -68,13 +68,6 @@ def admin_index():
         vidRows=vidRows
     )
 
-@action('adminButton')
-@action.uses(db, session, auth.user, url_signer.verify())
-def adminButton():
-    print('admin method')
-    redirect(URL('admin'))
-    return dict()
-
 @action('about')
 @action.uses(db, auth, 'about.html')
 def about():
