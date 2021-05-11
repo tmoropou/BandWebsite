@@ -61,7 +61,7 @@ def admin_index():
 
     # Get all videos
     vidRows = db(db.video.id > 0).select()
-    
+
     return dict(
         admin=admin,
         url_signer=url_signer,
@@ -122,11 +122,12 @@ def bump_video(video_id=None):
     assert video_id is not None
     # Set current front video to 0
     frontVideo = db(db.video.front == 1).select().first()
-    db.video.update_or_insert(
-        (db.video.id == frontVideo.id) &
-        (db.video.video_name == frontVideo.video_name),
-        front = 0
-    )
+    if frontVideo != None:
+        db.video.update_or_insert(
+            (db.video.id == frontVideo.id) &
+            (db.video.video_name == frontVideo.video_name),
+            front = 0
+        )
     # Set new front video to 1
     newFrontVideo = db(db.video.id == video_id).select().first()
     db.video.update_or_insert(
@@ -134,6 +135,13 @@ def bump_video(video_id=None):
         (db.video.video_name == newFrontVideo.video_name),
         front = 1
     )
+    redirect(URL('admin'))
+
+@action('delete_video/<video_id:int>')
+@action.uses(db, session, auth.user, url_signer.verify())
+def delete_video(video_id=None):
+    assert video_id is not None
+    db(db.video.id == video_id).delete()
     redirect(URL('admin'))
 
 @action('profile', method=["GET", "POST"])
