@@ -9,11 +9,36 @@
           admin button
       </a>
       <a class='button is-info' href="[[=URL('add_video')]]">
-          add new videos
+          add new video
       </a>
       <a class='button is-warning' href="[[=URL('bump_video', 5, signer=url_signer)]]">
           bump
       </a>
   </div>
-
+  <div class="title has-text-centered">
+    <h2 class="title has-text-white"> Select front video </h2>
+  </div>
+  <table class="table is-fullwidth is-striped">
+    <thead>
+      <th> Video Name </th>
+      <th> URL </th>
+      <th> </th>
+    </thead>
+    <tbody>
+      [[for v in vidRows:]]
+        <tr>
+          <td>[[=v.video_name]]</td>
+          <td>[[=v.video_url]]</td>
+          <td>
+            <a 
+              class='button is-warning'
+              href="[[=URL('bump_video', v.id, signer=url_signer)]]"
+            >
+              Bump to Front
+            </a>
+          </td>
+        </tr>
+      [[pass]]
+    </tbody>
+  </table>
 </div>

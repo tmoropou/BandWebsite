@@ -48,6 +48,7 @@ def index():
 @action('admin')
 @action.uses(db, session, auth.user, 'admin.html')
 def admin_index():
+    # Gets all admins
     admins = db(db.account.user_admin == 1).select()
 
     # Checks if user is one of the admins
@@ -57,9 +58,14 @@ def admin_index():
             userIsAdmin = True
     if userIsAdmin == False:
         redirect(URL('index'))
+
+    # Get all videos
+    vidRows = db(db.video.id > 0).select()
+    
     return dict(
         admin=admin,
-        url_signer=url_signer
+        url_signer=url_signer,
+        vidRows=vidRows
     )
 
 @action('adminButton')
