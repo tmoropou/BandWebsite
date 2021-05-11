@@ -404,3 +404,12 @@ success!
 success!
 success!
 success!
+success!
+success!
+timestamp: 2021-05-11T12:30:48.265985
+ALTER TABLE "video" ADD "creation_time" CHAR(512);
+success!
+success!
+success!
+success!
+success!

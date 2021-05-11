@@ -50,7 +50,10 @@ db.account.user_admin.writable = db.account.user_admin.readable = False
 db.define_table(
     'video',
     Field('video_name', requires=IS_NOT_EMPTY()),
-    Field('video_url', requires=IS_URL())
+    Field('video_url', requires=IS_URL()),
+    Field('creation_time', default=get_time)
 )
+
+db.video.creation_time.writable = db.video.creation_time.readable = False
 
 db.commit()

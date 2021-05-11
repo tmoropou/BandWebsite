@@ -64,12 +64,14 @@ def admin_index():
 
 @action('adminButton')
 @action.uses(db, session, auth.user, url_signer.verify())
+def adminButton():
+    print('admin method')
+    redirect(URL('admin'))
+    return dict()
 
 @action('about')
 @action.uses(db, auth, 'about.html')
 def about():
-    print('admin method')
-    redirect(URL('admin'))
     return dict()
 
 @action('merch')
@@ -84,6 +86,24 @@ def video():
     # food = "https://www.youtube.com/embed/qEkmd1IXq-Y"
     # overview = "https://www.youtube.com/embed/2nfYTyUnfM0"
     return dict(thevideo=urlfromdb)
+
+@action('add_video', method=['GET', 'POST'])
+@action.uses(db, session, auth.user, 'add_video.html')
+def add_video():
+    admins = db(db.account.user_admin == 1).select()
+
+    # Checks if user is one of the admins
+    userIsAdmin = False
+    for admin in admins:
+        if admin.user_email == get_user_email():
+            userIsAdmin = True
+    if userIsAdmin == False:
+        redirect(URL('index'))
+
+    form = Form(db.video, csrf_session=session, formstyle=FormStyleBulma)
+    if form.accepted:
+        redirect(URL('admin'))
+    return dict(form=form)
 
 @action('profile', method=["GET", "POST"])
 @action.uses(db, session, auth.user, 'profile.html')
