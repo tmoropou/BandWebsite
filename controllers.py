@@ -110,6 +110,26 @@ def add_video():
         redirect(URL('admin'))
     return dict(form=form)
 
+@action('bump_video/<video_id:int>', method=['GET', 'POST'])
+@action.uses(db, session, auth.user, url_signer.verify())
+def bump_video(video_id=None):
+    assert video_id is not None
+    # Set current front video to 0
+    frontVideo = db(db.video.front == 1).select().first()
+    db.video.update_or_insert(
+        (db.video.id == frontVideo.id) &
+        (db.video.video_name == frontVideo.video_name),
+        front = 0
+    )
+    # Set new front video to 1
+    newFrontVideo = db(db.video.id == video_id).select().first()
+    db.video.update_or_insert(
+        (db.video.id == newFrontVideo.id) &
+        (db.video.video_name == newFrontVideo.video_name),
+        front = 1
+    )
+    redirect(URL('admin'))
+
 @action('profile', method=["GET", "POST"])
 @action.uses(db, session, auth.user, 'profile.html')
 def profile():
