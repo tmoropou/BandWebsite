@@ -413,3 +413,11 @@ success!
 success!
 success!
 success!
+success!
+success!
+timestamp: 2021-05-11T12:54:48.212022
+ALTER TABLE "video" ADD "front" INTEGER;
+success!
+success!
+success!
+success!

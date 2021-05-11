@@ -82,10 +82,15 @@ def merch():
 @action('video')
 @action.uses(db, auth, 'video.html')
 def video():
-    urlfromdb = db(db.video.video_name=="food").select().first().video_url
+    frontVideo = db(db.video.front==1).select().first()
+    if frontVideo == None:
+        print("Error: no video flagged for front in DB")
+        redirect(URL('index'))
+    else:
+        videoURL = frontVideo.video_url
     # food = "https://www.youtube.com/embed/qEkmd1IXq-Y"
     # overview = "https://www.youtube.com/embed/2nfYTyUnfM0"
-    return dict(thevideo=urlfromdb)
+    return dict(thevideo=videoURL)
 
 @action('add_video', method=['GET', 'POST'])
 @action.uses(db, session, auth.user, 'add_video.html')

@@ -51,7 +51,8 @@ db.define_table(
     'video',
     Field('video_name', requires=IS_NOT_EMPTY()),
     Field('video_url', requires=IS_URL()),
-    Field('creation_time', default=get_time)
+    Field('creation_time', default=get_time),
+    Field('front', 'integer', default=0)
 )
 
 db.video.creation_time.writable = db.video.creation_time.readable = False
