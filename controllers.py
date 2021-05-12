@@ -145,17 +145,9 @@ def delete_video(video_id=None):
 @action('profile', method=["GET", "POST"])
 @action.uses(db, session, auth.user, 'profile.html')
 def profile():
-    # Get users first name
-    rows = db(db.account.user_email == get_user_email()).select()
-    row = rows[0]
-    name = row.user_first_name
-
-    p = db(db.account.user_email == get_user_email()).select()
-    x = p[0]
-
-    p = db.account[x.id]
-
-    return dict(name=name, row=row)
+    # Get user account
+    user_account = db(db.account.user_email == get_user_email()).select().first()
+    return dict(user_profile=user_account)
 
 @action('edit_profile', method=["GET", "POST"])
 @action.uses(db, session, auth.user, 'edit_profile.html')

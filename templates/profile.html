@@ -1,7 +1,7 @@
 [[extend 'layout.html']]
 
 <div class="section has-background-dark is-justify-content-center">
-        <h1 class="title is-1 has-text-white has-text-centered">[[=name]]'s Profile</h1>
+        <h1 class="title is-1 has-text-white has-text-centered">[[=user_profile.user_username]]'s Profile</h1>
 
     <!-- Profile picture -->
     <div class="columns is-centered is-vcentered is-mobile mt-3">
@@ -14,9 +14,9 @@
     <div class="columns is-centered is-vcentered is-mobile">
         <div class="section has-text-centered is-centered is-vcentered is-mobile">
             <a class="button is-primary mb-6" href="[[=URL('edit_profile')]]">Edit Profile</a>
-            <div class="title is-centered is-5 has-text-white"> E-mail: [[=row.user_email]]</div>
-            <div class="title is-5 has-text-white"> Name: [[=row.user_first_name]] [[=row.user_last_name]]</div>
-            <div class="title is-5 has-text-white"> Username: [[=row.user_username]]</div>
+            <div class="title is-centered is-5 has-text-white"> E-mail: [[=user_profile.user_email]]</div>
+            <div class="title is-5 has-text-white"> Name: [[=user_profile.user_first_name]] [[=user_profile.user_last_name]]</div>
+            <div class="title is-5 has-text-white"> Username: [[=user_profile.user_username]]</div>
             <a class="button is-danger mt-5" href="[[=URL('auth/change_password')]]">Change Password</a>
         </div>
     </div>

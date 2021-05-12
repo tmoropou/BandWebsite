@@ -517,3 +517,24 @@ success!
 success!
 success!
 success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2021-05-12T12:25:43.854397
+ALTER TABLE "account" ADD "image_file" BLOB;
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!

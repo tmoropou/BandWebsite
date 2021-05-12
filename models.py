@@ -38,9 +38,10 @@ db.define_table(
     Field('user_first_name', label="First Name", default=get_user_first_name()),
     Field('user_last_name', label="Last Name", default=get_user_last_name()),
     Field('user_username', label="Username"),
-    Field('picture', 'upload', download_url=None),
+    Field('picture', 'upload', uploadfield='image_file'),
+    Field('image_file', 'blob'),
     Field('user_admin', 'integer', default=0),
-    )
+)
 
 db.account.id.readable = db.account.id.writable = False
 db.account.user_password.writable = db.account.user_password.readable = False
