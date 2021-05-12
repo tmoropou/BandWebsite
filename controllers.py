@@ -74,9 +74,11 @@ def about():
     return dict()
 
 @action('merch')
-@action.uses(db, auth, 'merch.html')
+@action.uses(db, auth, 'merch2.html')
 def merch():
-    return dict()
+    rows = db(db.merch.item_cost != None).select()
+    column_counter = 0
+    return dict(rows=rows, column_counter=column_counter)
 
 @action('video')
 @action.uses(db, auth, 'video.html')

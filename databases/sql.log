@@ -440,3 +440,49 @@ success!
 success!
 success!
 success!
+success!
+success!
+timestamp: 2021-05-11T20:14:13.671296
+CREATE TABLE "merch"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "item_cost" DOUBLE,
+    "item_name" CHAR(512),
+    "item_description" CHAR(512),
+    "item_stock" INTEGER,
+    "item_image" CHAR(512)
+);
+success!
+success!
+timestamp: 2021-05-11T20:19:46.661781
+ALTER TABLE "merch" ADD "item_type" CHAR(512);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!

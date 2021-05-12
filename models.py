@@ -58,4 +58,15 @@ db.define_table(
 db.video.creation_time.writable = db.video.creation_time.readable = False
 db.video.front.writable = db.video.front.readable = False
 
+### Define Merch Store table
+db.define_table(
+    'merch',
+    Field('item_cost', 'float', default=0.00),
+    Field('item_name', 'string', default="Item Name"),
+    Field('item_description', 'string'),
+    Field('item_stock', 'integer', default=0),
+    Field('item_image', 'upload', download_url=None),
+    Field('item_type', 'string')
+)
+
 db.commit()
