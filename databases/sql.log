@@ -486,3 +486,34 @@ success!
 success!
 success!
 success!
+success!
+success!
+timestamp: 2021-05-11T21:43:33.177464
+ALTER TABLE "merch" ADD "item_image_file" BLOB;
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!

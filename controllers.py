@@ -78,7 +78,10 @@ def about():
 def merch():
     rows = db(db.merch.item_cost != None).select()
     column_counter = 0
-    return dict(rows=rows, column_counter=column_counter)
+    item_counter = 0
+    for i in rows:
+        item_counter = item_counter + 1
+    return dict(rows=rows, column_counter=column_counter, item_counter=item_counter)
 
 @action('video')
 @action.uses(db, auth, 'video.html')
