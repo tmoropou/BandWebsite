@@ -147,7 +147,11 @@ def delete_video(video_id=None):
 def profile():
     # Get user account
     user_account = db(db.account.user_email == get_user_email()).select().first()
-    return dict(user_profile=user_account)
+    return dict(
+        user_profile=user_account,
+        profile_pic_url=URL('profile_pic', signer=url_signer),
+        picture_upload_url=URL('picture_upload', signer=url_signer)
+    )
 
 @action('edit_profile', method=["GET", "POST"])
 @action.uses(db, session, auth.user, 'edit_profile.html')
@@ -167,3 +171,22 @@ def edit_profile():
         redirect(URL('profile'))
 
     return dict(form=form, name=name)
+
+@action('profile_pic', method=["GET"])
+@action.uses(db, session, auth.user, url_signer.verify())
+def profile_pic():
+    profile = db(db.account.user_email == get_user_email()).select().first()
+    return dict(
+        picture = profile.picture
+    )
+
+@action('picture_upload', method=["POST"])
+@action.uses(db, session, auth.user, url_signer.verify())
+def picture_upload():
+    uploaded_file = request.body
+    db.account.update_or_insert(
+        (db.account.user_email == get_user_email()),
+        picture = uploaded_file
+    )
+    profile = db(db.account.user_email == get_user_email()).select().first()
+    return "ok"

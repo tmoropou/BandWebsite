@@ -1,0 +1,40 @@
+[[extend 'layout.html']]
+
+<div class="section has-background-dark is-justify-content-center">
+    <h1 class="title is-2 has-text-white has-text-centered">Change your Profile Picture</h1>
+
+    <!-- Profile picture -->
+    <div class="columns is-centered is-vcentered is-mobile mt-3">
+        <img class="image mt-3 is-128x128 is-justify-content-center has-background-dark" :src="picture">
+        <!-- placeholder image -->
+
+    </div>
+
+    <!-- User Info -->
+    <div class="columns is-centered is-vcentered is-mobile" id="vue-target" v-cloak>
+        <div class="field has-addons">
+            <p class="control">
+                <div v-if="!uploading" class="file is-info">
+                    <label class="file-label">
+                        <input class="file-input" type="file" @change="upload_file($event)">
+                        <span class="file-cta">
+                            <span class="file-icon">
+                                <i v-if="uploading" class="fa fa-spinner fa-pulse fa-fw"></i>
+                                <i v-else class="fa fa-upload fa-fw"></i>
+                            </span>
+                            <span class="file-label">
+                                <span v-if="!uploading">Upload new Picture</span>
+                            </span>
+                        </span>
+                    </label>
+                </div>
+            </p>
+            <p v-if="upload_done" class="control">
+                <span> Uploaded file: {{uploaded_file}}</span>
+            </p>
+        </div>
+    </div>
+</div>
+
+[[block page_scripts]]
+[[end]]

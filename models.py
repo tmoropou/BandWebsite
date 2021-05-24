@@ -38,8 +38,7 @@ db.define_table(
     Field('user_first_name', label="First Name", default=get_user_first_name()),
     Field('user_last_name', label="Last Name", default=get_user_last_name()),
     Field('user_username', label="Username"),
-    Field('picture', 'upload', uploadfield='image_file'),
-    Field('image_file', 'blob'),
+    Field('picture'),
     Field('user_admin', 'integer', default=0),
 )
 
