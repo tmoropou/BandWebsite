@@ -40,6 +40,7 @@ db.define_table(
     Field('user_username', label="Username"),
     Field('picture'),
     Field('user_admin', 'integer', default=0),
+    Field('newsletter', 'integer', default=0),
 )
 
 db.account.id.readable = db.account.id.writable = False

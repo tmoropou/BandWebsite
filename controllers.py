@@ -190,3 +190,16 @@ def picture_upload():
     )
     profile = db(db.account.user_email == get_user_email()).select().first()
     return "ok"
+
+@action('newsreg')
+@action.uses(db, session, auth.user, url_signer.verify(), 'newsletter.html')
+def newsreg():
+    a = db(db.account.user_email == get_user_email()).select().first()
+    if a.newsletter is None:
+        a.newsletter = 1
+    elif a.newsletter == 0:
+        a.newsletter = 1
+    else:
+        a.newsletter = 0
+    a.update_record()
+    return dict(url_signer=url_signer)
