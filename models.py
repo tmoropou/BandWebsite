@@ -79,4 +79,15 @@ db.define_table(
     Field('username')
 )
 
+### Define Merch Reviews Table
+db.define_table(
+    'review',
+    Field('review_body'),
+    Field('review_textless', default=True),
+    Field('review_score', 'integer', default=5),
+    Field('item_id', 'reference merch'),
+    Field('user_email'),
+    Field('creation_date', default=get_time)
+)
+
 db.commit()
