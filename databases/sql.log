@@ -699,3 +699,11 @@ success!
 success!
 success!
 success!
+success!
+success!
+timestamp: 2021-05-25T14:23:02.772892
+ALTER TABLE "comment" ADD "user_email" CHAR(512);
+success!
+success!
+success!
+success!

@@ -74,7 +74,7 @@ db.define_table(
 db.define_table(
     'comment',
     Field('message_body'),
-    Field('user_account_id', 'reference account'),
+    Field('user_email'),
     Field('video_id', 'reference video'),
     Field('username')
 )

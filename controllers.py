@@ -45,6 +45,8 @@ def index():
 
     return dict(url_signer=url_signer)
 
+### Admin methods and pages
+
 @action('admin')
 @action.uses(db, session, auth.user, 'admin.html')
 def admin_index():
@@ -67,6 +69,15 @@ def admin_index():
         url_signer=url_signer,
         vidRows=vidRows
     )
+
+@action('check_admin', method=["GET"])
+@action.uses(db, session)
+def check_admin():
+    email = get_user_email()
+    if email == None:
+        return dict(admin=0)
+    admin = db(db.account.user_email == email).select().first().user_admin
+    return dict(admin=admin)
 
 @action('about')
 @action.uses(db, auth, 'about.html')
@@ -225,11 +236,10 @@ def add_comment(video_id=None):
     assert video_id is not None
     if get_user_email() == None:
         redirect(URL('video'))
-    user_id = db(db.account.user_email == get_user_email()).select().first().id
     user_name = db(db.account.user_email == get_user_email()).select().first().user_username
     db.comment.insert(
         message_body=request.json.get('body'),
-        user_account_id=user_id,
+        user_email=get_user_email(),
         video_id=video_id,
         username=user_name,
     )
