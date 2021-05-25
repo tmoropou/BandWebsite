@@ -109,7 +109,8 @@ def video():
         thevideo=videoURL,
         video_id=frontVideo.id,
         load_comments_url=URL('load_video_comments'),
-        add_comment_url=URL('add_comment')
+        add_comment_url=URL('add_comment'),
+        delete_comment_url=URL('delete_comment', signer=url_signer),
     )
 
 @action('add_video', method=['GET', 'POST'])
@@ -243,4 +244,17 @@ def add_comment(video_id=None):
         video_id=video_id,
         username=user_name,
     )
+    return 'ok'
+
+@action('delete_comment', method=["GET", "POST"])
+@action.uses(url_signer.verify(), db, auth.user)
+def delete_comment():
+    id = request.params.get('id')
+    print(request)
+    comment = db(db.comment.id == id).select().first()
+    account = db(db.account.user_email == get_user_email()).select().first()
+    if (comment.user_email == account.user_email) or (account.user_admin > 0):
+        db(db.comment.id == id).delete()
+    else:
+        return 'rejected'
     return 'ok'

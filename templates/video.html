@@ -22,16 +22,27 @@
     </figure>
   </div>
 
-  <div class="box has-background-grey">
+  <div class="box has-background-grey" v-if="logged_in">
     <div class="block" v-for="r in rows">
       <article class="box has-background-light">
         <div class="container">
           <p class="has-text-black"> {{r.message_body}} </p>
-          <p class="has-text-grey"> {{r.username}} </p>
+        </div>
+        <div class="container is-flex">
+          <div class="content is-flex-grow-1">
+            <p class="has-text-grey"> {{r.username}} </p>
+          </div>
+          <span 
+            class="button is-danger" 
+            @click="delete_comment(r._idx)" 
+            v-if="r.user_email === '[[=globals().get('user').get('email')]]' || admin_flag"
+          >
+            <i class="fa fa-fw fa-trash"></i>
+          </span>
         </div>
       </article>
     </div>
-    <div class="block is-flex has-background-grey">
+    <div class="block is-flex has-background-grey" v-if="logged_in">
       <div class="field is-flex-grow-1">
         <div class="control">
           <input type="text" v-model="add_comment_body" class="input">
@@ -54,8 +65,10 @@
 <script>
   let load_comments_url = "[[=XML(load_comments_url)]]";
   let add_comment_url = "[[=XML(add_comment_url)]]";
+  let delete_comment_url = "[[=XML(delete_comment_url)]]"
   let video_id = "[[=video_id]]";
   let check_admin_url = "[[=URL('check_admin')]]";
+  let global_email = "[[=globals().get('user').get('email')]]";
 </script>
 <script src="js/video_page.js"></script>
 [[end]]
