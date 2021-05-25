@@ -70,4 +70,13 @@ db.define_table(
     Field('item_type', 'string')
 )
 
+### Define Comments Table
+db.define_table(
+    'comment',
+    Field('message_body'),
+    Field('user_account_id', 'reference account'),
+    Field('video_id', 'reference video'),
+    Field('username')
+)
+
 db.commit()

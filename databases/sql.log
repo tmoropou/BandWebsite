@@ -676,3 +676,26 @@ success!
 success!
 success!
 success!
+success!
+success!
+timestamp: 2021-05-25T09:33:15.847719
+CREATE TABLE "comment"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "message_body" CHAR(512),
+    "user_account_id" INTEGER REFERENCES "account" ("id") ON DELETE CASCADE  ,
+    "video_id" INTEGER REFERENCES "video" ("id") ON DELETE CASCADE  ,
+    "username" CHAR(512)
+);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!

@@ -1,6 +1,6 @@
 [[extend 'layout.html']]
 
-<div class="section has-background-dark">
+<div class="section has-background-dark" id="vue-target">
   <div class="title has-text-centered">
     <h1 class="title has-text-white">Latest Video</h1>
   </div>
@@ -22,4 +22,39 @@
     </figure>
   </div>
 
+  <div class="box has-background-grey">
+    <div class="block" v-for="r in rows">
+      <article class="box has-background-light">
+        <div class="container">
+          <p class="has-text-black"> {{r.message_body}} </p>
+          <p class="has-text-grey"> {{r.username}} </p>
+        </div>
+      </article>
+    </div>
+    <div class="block is-flex has-background-grey">
+      <div class="field is-flex-grow-1">
+        <div class="control">
+          <input type="text" v-model="add_comment_body" class="input">
+        </div>
+      </div>
+      <div class="block ml-1">
+        <span 
+          class="button is-info" 
+          @click="add_comment" 
+        >
+          <i class="fa fa-fw fa-reply"></i>
+        </span>
+
+      </div>
+    </div>
+  </div>
 </div>
+
+[[block page_scripts]]
+<script>
+  let load_comments_url = "[[=XML(load_comments_url)]]";
+  let add_comment_url = "[[=XML(add_comment_url)]]";
+  let video_id="[[=video_id]]"
+</script>
+<script src="js/video_page.js"></script>
+[[end]]

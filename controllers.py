@@ -94,7 +94,12 @@ def video():
         videoURL = frontVideo.video_url
     # food = "https://www.youtube.com/embed/qEkmd1IXq-Y"
     # overview = "https://www.youtube.com/embed/2nfYTyUnfM0"
-    return dict(thevideo=videoURL)
+    return dict(
+        thevideo=videoURL,
+        video_id=frontVideo.id,
+        load_comments_url=URL('load_video_comments'),
+        add_comment_url=URL('add_comment')
+    )
 
 @action('add_video', method=['GET', 'POST'])
 @action.uses(db, session, auth.user, 'add_video.html')
@@ -203,3 +208,29 @@ def newsreg():
         a.newsletter = 0
     a.update_record()
     return dict()
+
+
+### Comments methods
+
+@action('load_video_comments/<video_id:int>', method=["GET"])
+@action.uses(db, session)
+def load_video_comments(video_id=None):
+    assert video_id is not None
+    rows = db(db.comment.video_id == video_id).select().as_list()
+    return dict(rows=rows)
+
+@action('add_comment/<video_id:int>', method=["GET", "POST"])
+@action.uses(db, session, auth.user)
+def add_comment(video_id=None):
+    assert video_id is not None
+    if get_user_email() == None:
+        redirect(URL('video'))
+    user_id = db(db.account.user_email == get_user_email()).select().first().id
+    user_name = db(db.account.user_email == get_user_email()).select().first().user_username
+    db.comment.insert(
+        message_body=request.json.get('body'),
+        user_account_id=user_id,
+        video_id=video_id,
+        username=user_name,
+    )
+    return 'ok'
