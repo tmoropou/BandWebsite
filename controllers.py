@@ -202,4 +202,4 @@ def newsreg():
     else:
         a.newsletter = 0
     a.update_record()
-    return dict(url_signer=url_signer)
+    return dict()
