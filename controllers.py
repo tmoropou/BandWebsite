@@ -192,7 +192,7 @@ def picture_upload():
     return "ok"
 
 @action('newsreg')
-@action.uses(db, session, auth.user, url_signer.verify(), 'newsletter.html')
+@action.uses(db, session, auth.user, 'newsletter.html')
 def newsreg():
     a = db(db.account.user_email == get_user_email()).select().first()
     if a.newsletter is None:
