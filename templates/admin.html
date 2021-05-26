@@ -50,7 +50,12 @@
       <th> Cost </th>
       <th> Stock </th>
       <th> Image Path </th>
-      <th> </th>
+      <th> 
+        <a
+          class="button is-info"
+          href="[[=URL('edit_merch', -1, signer=url_signer)]]"
+        > New Item </a>
+      </th>
     </thead>
     <tbody>
       [[for m in merch_rows:]]

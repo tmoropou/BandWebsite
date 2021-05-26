@@ -108,9 +108,14 @@ def merch():
 @action.uses(url_signer.verify(), db, session, auth.user, 'edit_merch.html')
 def edit_merch(merch_id=None):
     assert merch_id is not None
-    item = db(db.merch.id == merch_id).select().first()
+    if merch_id == -1:
+        item = db(db.merch.id).select().first()
+        item.id = -1
+    else:
+        item = db(db.merch.id == merch_id).select().first()
     if item == None:
         redirect(URL('admin'))
+    print("sending:",item)
     return dict(
         item=item,
         update_item_url=URL('update_item', signer=url_signer)
@@ -124,14 +129,27 @@ def update_item():
     if admin == 0:
         redirect(URL('index'))
     else:
-        db.merch.update_or_insert((db.merch.id == body.get("id")),
-            item_name = body["name"],
-            item_cost = body["cost"],
-            item_description = body["description"],
-            item_stock = body["stock"],
-            item_image = body["image_path"],
-            item_type = body["type"]
-        )
+        print("updating", body)
+        if body["id"] == '-1' or body["id"] == -1:
+            id = db.merch.insert(
+                item_name = body["name"],
+                item_cost = body["cost"],
+                item_description = body["description"],
+                item_stock = body["stock"],
+                item_image = body["image_path"],
+                item_type = body["type"]
+            )
+            print(id)
+            return dict(id=id)
+        else:
+            db.merch.update_or_insert((db.merch.id == body.get("id")),
+                item_name = body["name"],
+                item_cost = body["cost"],
+                item_description = body["description"],
+                item_stock = body["stock"],
+                item_image = body["image_path"],
+                item_type = body["type"]
+            )
     return 'ok'
 
 @action('delete_item', method=["GET", "POST"])

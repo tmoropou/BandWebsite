@@ -65,11 +65,14 @@ let init = (app) => {
             }
         }
 
+        console.log(app.vue.item);
         axios.post(update_item_url,
             {
                 body: app.vue.item,
             }).then(function (response) {
-
+                if(Number.isInteger(response.data.id)) {
+                    app.vue.item.id = response.data.id;
+                }
             }
         );
         app.toggle_edit(key);
