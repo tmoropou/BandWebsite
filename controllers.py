@@ -117,7 +117,20 @@ def edit_merch(merch_id=None):
 @action('update_item', method=["GET", "POST"])
 @action.uses(db, session, auth.user, url_signer.verify())
 def update_item():
-    print(request.json.body)
+    body = request.json.get('body')
+    admin = db(db.account.user_email == get_user_email()).select().first().user_admin
+    if admin == 0:
+        redirect(URL('index'))
+    else:
+        db.merch.update_or_insert((db.merch.id == body.get("id")),
+            item_name = body["name"],
+            item_cost = body["cost"],
+            item_description = body["description"],
+            item_stock = body["stock"],
+            item_image = body["image_path"],
+            item_type = body["type"]
+        )
+
     return 'ok'
 
 ### Video Endpoints
