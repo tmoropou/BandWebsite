@@ -25,6 +25,7 @@ session, db, T, auth, and tempates are examples of Fixtures.
 Warning: Fixtures MUST be declared with @action.uses({fixtures}) else your app will result in undefined behavior
 """
 
+from inspect import signature
 from py4web import action, request, abort, redirect, URL
 from yatl.helpers import A
 from .common import db, session, T, cache, auth, logger, authenticated, unauthenticated, flash
@@ -69,7 +70,8 @@ def admin_index():
         admin=admin,
         url_signer=url_signer,
         vidRows=vidRows,
-        merch_rows=merch_rows
+        merch_rows=merch_rows,
+        delete_item_url=URL('delete_item', signer=url_signer)
     )
 
 @action('check_admin', method=["GET"])
@@ -130,7 +132,17 @@ def update_item():
             item_image = body["image_path"],
             item_type = body["type"]
         )
+    return 'ok'
 
+@action('delete_item', method=["GET", "POST"])
+@action.uses(db, session, url_signer.verify())
+def delete_item():
+    id = request.params.get('id')
+    admin = db(db.account.user_email == get_user_email()).select().first().user_admin
+    if admin == 0:
+        redirect(URL('index'))
+    else:
+        db(db.merch.id == id).delete()
     return 'ok'
 
 ### Video Endpoints
