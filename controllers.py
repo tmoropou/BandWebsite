@@ -86,6 +86,8 @@ def check_admin():
 def about():
     return dict()
 
+### Merch Endpoints
+
 @action('merch')
 @action.uses(db, auth, 'merch2.html')
 def merch():
@@ -99,6 +101,26 @@ def merch():
         column_counter=column_counter,
         item_counter=item_counter
     )
+
+@action('edit_merch/<merch_id:int>')
+@action.uses(url_signer.verify(), db, session, auth.user, 'edit_merch.html')
+def edit_merch(merch_id=None):
+    assert merch_id is not None
+    item = db(db.merch.id == merch_id).select().first()
+    if item == None:
+        redirect(URL('admin'))
+    return dict(
+        item=item,
+        update_item_url=URL('update_item', signer=url_signer)
+    )
+
+@action('update_item', method=["GET", "POST"])
+@action.uses(db, session, auth.user, url_signer.verify())
+def update_item():
+    print(request.json.body)
+    return 'ok'
+
+### Video Endpoints
 
 @action('video')
 @action.uses(db, auth, 'video.html')

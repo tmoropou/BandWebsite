@@ -44,7 +44,7 @@
   <div class="title has-text-centered">
     <h2 class="title has-text-white"> Merch Store Items </h2>
   </div>
-  <table class="table is-fullwidth is-striped">
+  <table class="table is-fullwidth is-striped is-bordered">
     <thead>
       <th> Item Name </th>
       <th> Cost </th>
@@ -62,7 +62,7 @@
           <td>
             <a 
               class='button is-warning'
-              href=""
+              href="[[=URL('edit_merch', m.id, signer=url_signer)]]"
             >
               Edit
             </a>

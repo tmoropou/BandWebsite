@@ -11,6 +11,15 @@ let init = (app) => {
         rows: [],
         admin_flag: false,
         logged_in: false,
+        editing: {
+            'name': false,
+            'cost': false,
+            'description': false,
+            'image_path': false,
+            'type': false,
+            'stock': false,
+        },
+        item: {}
     };
 
     app.enumerate = (a) => {
@@ -28,8 +37,47 @@ let init = (app) => {
         return false;
     }
 
-    app.methods = {
+    app.toggle_edit = function (key) {
+        if(key in app.vue.editing){
+            app.vue.editing[key] = !app.vue.editing[key];
+        }
+        return;
+    }
 
+    app.edit_field = function (key) {
+        if(key === "stock"){
+            let as_int = parseInt(app.vue.item.stock);
+            if(isNaN(as_int)){
+                app.vue.item.stock = 0;
+            } else {
+                app.vue.item.stock = as_int;
+            }
+        }
+        
+        // I can't get this to handle floats properly
+        // So I'm just going to handle that in the backend
+        if(key === "cost"){
+            let as_float = parseFloat(app.vue.item.cost);
+            if(isNaN(as_float)){
+                app.vue.item.cost = 0;
+            } else {
+                app.vue.item.cost = parseFloat(as_float);
+            }
+        }
+
+        axios.post(update_item_url,
+            {
+                body: app.vue.item,
+            }).then(function (response) {
+
+            }
+        );
+        app.toggle_edit(key);
+    }
+
+    app.methods = {
+        toggle_edit: app.toggle_edit,
+        edit_field: app.edit_field,
     };
 
     // This creates the Vue instance.
@@ -46,8 +94,8 @@ let init = (app) => {
                 app.vue.admin_flag = true;
             }
         });
-        app.vue.video_id=video_id;
         app.check_logged();
+        app.vue.item = item;
     };
 
     // Call to the initializer.
