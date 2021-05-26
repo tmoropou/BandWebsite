@@ -1,0 +1,40 @@
+[[extend 'layout.html']]
+
+<div class="section has-background-dark is-justify-content-center" id="vue-target">
+    <div class="field">
+        <label class="label has-text-white">Email</label>
+        <div class="control has-icons-left has-icons-right">
+            <input class="input has-background-grey has-text-white" type="email" placeholder="Enter Email">
+            <span class="icon is-small is-left">
+                <i class="fa fa-envelope-o" aria-hidden="true"></i>
+            </span>
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label has-text-white">Password</label>
+        <div class="control has-icons-left has-icons-right">
+            <input class="input has-background-grey has-text-white" type="text" placeholder="Enter Password">
+            <span class="icon is-small is-left">
+                <i class="fa fa-key" aria-hidden="true"></i>
+            </span>
+        </div>
+    </div>
+
+    <div class="field is-grouped">
+        <div class="control">
+            <button class="button is-link">Login</button>
+        </div>
+        <div class="control">
+            <button class="button is-link is-light">Cancel</button>
+        </div>
+    </div>
+</div>
+
+[[block page_scripts]]
+<script>
+    let file_upload_url = "[[=XML(picture_upload_url)]]";
+    let profile_pic_url = "[[=XML(profile_pic_url)]]";
+</script>
+<script src="js/index.js"></script>
+[[end]]

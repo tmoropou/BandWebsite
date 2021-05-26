@@ -159,6 +159,24 @@ def delete_video(video_id=None):
     db(db.video.id == video_id).delete()
     redirect(URL('admin'))
 
+@action('register_user', method=["GET", "POST"])
+@action.uses(db, 'user_register.html')
+def register_user():
+    # TODO setup logic for creating a new user
+    return dict(
+        profile_pic_url=URL('profile_pic', signer=url_signer),
+        picture_upload_url=URL('picture_upload', signer=url_signer)
+    )
+
+@action('login_user', method=["GET", "POST"])
+@action.uses(db, 'user_login.html')
+def login_user():
+    # TODO setup logic for logging in a user
+    return dict(
+        profile_pic_url=URL('profile_pic', signer=url_signer),
+        picture_upload_url=URL('picture_upload', signer=url_signer)
+    )
+
 @action('profile', method=["GET", "POST"])
 @action.uses(db, session, auth.user, 'profile.html')
 def profile():
