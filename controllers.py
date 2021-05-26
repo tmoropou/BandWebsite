@@ -115,7 +115,6 @@ def edit_merch(merch_id=None):
         item = db(db.merch.id == merch_id).select().first()
     if item == None:
         redirect(URL('admin'))
-    print("sending:",item)
     return dict(
         item=item,
         update_item_url=URL('update_item', signer=url_signer)
@@ -129,7 +128,6 @@ def update_item():
     if admin == 0:
         redirect(URL('index'))
     else:
-        print("updating", body)
         if body["id"] == '-1' or body["id"] == -1:
             id = db.merch.insert(
                 item_name = body["name"],
@@ -139,7 +137,6 @@ def update_item():
                 item_image = body["image_path"],
                 item_type = body["type"]
             )
-            print(id)
             return dict(id=id)
         else:
             db.merch.update_or_insert((db.merch.id == body.get("id")),

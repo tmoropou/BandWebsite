@@ -54,8 +54,6 @@ let init = (app) => {
             }
         }
         
-        // I can't get this to handle floats properly
-        // So I'm just going to handle that in the backend
         if(key === "cost"){
             let as_float = parseFloat(app.vue.item.cost);
             if(isNaN(as_float)){
@@ -65,7 +63,6 @@ let init = (app) => {
             }
         }
 
-        console.log(app.vue.item);
         axios.post(update_item_url,
             {
                 body: app.vue.item,
