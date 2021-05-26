@@ -1,6 +1,6 @@
 [[extend 'layout.html']]
 
-<div class="section has-background-dark">
+<div class="section has-background-dark" id="vue-target">
   <div class="container">
     <button class="button is-black has-text-white">Filter Results</button>
       [[for row in rows:]]
@@ -33,3 +33,11 @@
   </div>
 </div>
 
+[[block page_scripts]]
+<!-- Loads the index-specific js for Vue -->
+<script>
+  let check_admin_url = "[[=URL('check_admin')]]";
+  let global_email = "[[=globals().get('user').get('email')]]";
+</script>
+<script src="js/merch.js"></script>
+[[end]]

@@ -52,6 +52,7 @@ def index():
 def admin_index():
     # Gets all admins
     admins = db(db.account.user_admin == 1).select()
+    merch_rows = db(db.merch.item_cost != None).select()
 
     # Checks if user is one of the admins
     userIsAdmin = False
@@ -67,7 +68,8 @@ def admin_index():
     return dict(
         admin=admin,
         url_signer=url_signer,
-        vidRows=vidRows
+        vidRows=vidRows,
+        merch_rows=merch_rows
     )
 
 @action('check_admin', method=["GET"])
@@ -92,7 +94,11 @@ def merch():
     item_counter = 0
     for i in rows:
         item_counter = item_counter + 1
-    return dict(rows=rows, column_counter=column_counter, item_counter=item_counter)
+    return dict(
+        rows=rows,
+        column_counter=column_counter,
+        item_counter=item_counter
+    )
 
 @action('video')
 @action.uses(db, auth, 'video.html')

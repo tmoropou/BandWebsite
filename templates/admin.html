@@ -2,7 +2,7 @@
 
 <div class="section has-background-dark">
   <div class="title has-text-centered">
-    <h1 class="title has-text-white"> Admin page temp </h1>
+    <h1 class="title has-text-white"> Admin Page </h1>
   </div>
   <div class="container">
       <a class='button is-info' href="[[=URL('add_video')]]">
@@ -33,6 +33,42 @@
             <a 
               class='button is-danger'
               href="[[=URL('delete_video', v.id, signer=url_signer)]]"
+            >
+              <span class="icon"><i class="fa fa-fw fa-trash"></i></span>
+          </a>
+          </td>
+        </tr>
+      [[pass]]
+    </tbody>
+  </table>
+  <div class="title has-text-centered">
+    <h2 class="title has-text-white"> Merch Store Items </h2>
+  </div>
+  <table class="table is-fullwidth is-striped">
+    <thead>
+      <th> Item Name </th>
+      <th> Cost </th>
+      <th> Stock </th>
+      <th> Image Path </th>
+      <th> </th>
+    </thead>
+    <tbody>
+      [[for m in merch_rows:]]
+        <tr>
+          <td>[[=m.item_name]]</td>
+          <td>[[=m.item_cost]]</td>
+          <td>[[=m.item_stock]]</td>
+          <td>[[=m.item_image]]</td>
+          <td>
+            <a 
+              class='button is-warning'
+              href=""
+            >
+              Edit
+            </a>
+            <a 
+              class='button is-danger'
+              href=""
             >
               <span class="icon"><i class="fa fa-fw fa-trash"></i></span>
           </a>
