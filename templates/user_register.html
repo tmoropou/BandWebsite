@@ -4,21 +4,21 @@
     <div class="field">
         <label class="label has-text-white">First Name</label>
         <div class="control">
-            <input class="input has-background-grey has-text-white" type="text" placeholder="Enter First Name">
+            <input class="input has-background-grey has-text-white" type="text" v-model="first_name" placeholder="Enter First Name">
         </div>
     </div>
 
     <div class="field">
         <label class="label has-text-white">Last Name</label>
         <div class="control">
-            <input class="input has-background-grey has-text-white" type="text" placeholder="Enter Last Name">
+            <input class="input has-background-grey has-text-white" type="text" v-model="last_name" placeholder="Enter Last Name">
         </div>
     </div>
 
     <div class="field">
         <label class="label has-text-white">Username</label>
         <div class="control has-icons-left has-icons-right">
-            <input class="input has-background-grey has-text-white" type="text" placeholder="Enter Username">
+            <input class="input has-background-grey has-text-white" type="text" v-model="user_name" placeholder="Enter Username">
             <span class="icon is-small is-left">
                 <i class="fa fa-user-o" aria-hidden="true"></i>
             </span>
@@ -28,7 +28,7 @@
     <div class="field">
         <label class="label has-text-white">Email</label>
         <div class="control has-icons-left has-icons-right">
-            <input class="input has-background-grey has-text-white" type="email" placeholder="Enter Email">
+            <input class="input has-background-grey has-text-white" type="email" v-model="user_email" placeholder="Enter Email">
             <span class="icon is-small is-left">
                 <i class="fa fa-envelope-o" aria-hidden="true"></i>
             </span>
@@ -38,7 +38,7 @@
     <div class="field">
         <label class="label has-text-white">Password</label>
         <div class="control has-icons-left has-icons-right">
-            <input class="input has-background-grey has-text-white" type="text" placeholder="Enter Password">
+            <input class="input has-background-grey has-text-white" type="text" v-model="user_password" placeholder="Enter Password">
             <span class="icon is-small is-left">
                 <i class="fa fa-key" aria-hidden="true"></i>
             </span>
@@ -57,19 +57,18 @@
 
     <div class="field is-grouped">
         <div class="control">
-            <button class="button is-link">Create Account</button>
+            <a class="button is-link" @click="create_user" href="[[=URL('index')]]">Create Account</a>
         </div>
         <div class="control">
-            <button class="button is-link is-light">Cancel</button>
+            <a class="button is-link is-light" href="[[=URL('index')]]">Cancel</a>
         </div>
     </div>
 </div>
 
 [[block page_scripts]]
 <script>
-    let file_upload_url = "[[=XML(picture_upload_url)]]";
-    let profile_pic_url = "[[=XML(profile_pic_url)]]";
+    let create_user_url = "[[=XML(create_user_url)]]";
 </script>
-<script src="js/index.js"></script>
+<script src="js/account.js"></script>
 [[end]]
 

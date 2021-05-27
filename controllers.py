@@ -232,9 +232,22 @@ def delete_video(video_id=None):
 def register_user():
     # TODO setup logic for creating a new user
     return dict(
-        profile_pic_url=URL('profile_pic', signer=url_signer),
-        picture_upload_url=URL('picture_upload', signer=url_signer)
+        create_user_url=URL('create_user'),
     )
+
+@action('create_user', method=["GET", "POST"])
+@action.uses(db, session, 'index.html')
+def create_user():
+    id = db.account.insert(
+        user_first_name=request.json.get('first_name'),
+        user_last_name=request.json.get('last_name'),
+        user_email=request.json.get('user_email'),
+        user_password=request.json.get('user_password'),
+        user_username=request.json.get('user_name')
+    )
+
+
+    return dict(id=id)
 
 @action('login_user', method=["GET", "POST"])
 @action.uses(db, 'user_login.html')
