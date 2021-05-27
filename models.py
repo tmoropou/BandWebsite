@@ -70,6 +70,13 @@ db.define_table(
     Field('item_type', 'string')
 )
 
+db.define_table(
+    'shoppingCart',
+    Field('user', 'reference account'),
+    Field('merch_list', 'list:reference', default=[]),
+    Field('item_count', 'integer'),
+)
+
 ### Define Comments Table
 db.define_table(
     'comment',

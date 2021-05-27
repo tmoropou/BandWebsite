@@ -258,3 +258,46 @@ def delete_comment():
     else:
         return 'rejected'
     return 'ok'
+
+@action('add_to_cart_redirect/<item_id:int>')
+@action.uses(db)
+def add_to_cart_redirect(item_id=None):
+    assert item_id is not None
+    cart = db(db.shoppingCart.user == get_user_email()).select().first()
+    if cart is None:
+        itemList = [item_id]
+        db.shoppingCart.insert(user=get_user_email(), merch_list=itemList, item_count=1)
+    else:
+        item_list = cart.merch_list
+        item_list.append(item_list)
+        count = cart.item_count + 1
+        db(db.shoppingCart.user == get_user_email()).update(merch_list=item_list, item_count=count)
+    redirect(URL('merch'))
+    return
+
+@action('add_to_cart')
+@action.uses(db) #might want to not use verify yet for testing purposes
+def add_to_cart():
+    print("hello?")
+    #user = get_user_email()
+    #item_id = request.params.get("item")
+    #item_ref = db(db.merch.id == item_id).select()
+    #cart = db(db.account.user_email == user).select(db.account.shoppingCart)
+    #cart.update_record(items=cart.merch_list.append(item_ref))
+    item_id = request.params.get('id')
+    assert item_id is not None
+    print("id is: ")
+    print(item_id)
+    print('it worked')
+    return "ok"
+
+
+@action('delete_from_cart')
+@action.uses(db) #might want to not use verify yet for testing purposes
+def delete_from_cart():
+    user = get_user_email()
+    item_id = request.params.get("item")
+    item_ref = db(db.merch.id == item_id).select()
+    cart = db(db.account.user_email == user).select(db.account.shoppingCart)
+    cart.update_record(items=cart.merch_list.remove(item_ref))
+    return "ok"
