@@ -8,8 +8,8 @@ let init = (app) => {
 
     // This is the Vue data.
     app.data = {
-        logged_in: true,
-        not_logged_in: false,
+        logged_in: false,
+        not_logged_in: true,
     };
 
     app.enumerate = (a) => {
