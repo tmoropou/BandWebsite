@@ -1,6 +1,6 @@
 [[extend 'layout.html']]
 
-<div class="section has-background-dark" id="vue-target">
+<div class="section has-background-dark" id="vue-target" v-cloak>
   <div class="container">
 
     <div class="columns">
@@ -62,9 +62,76 @@
     </div>
 
     <div class="box has-background-dark">
-      <h2 class="title is-size-4 has-text-white">
-        Reviews
-      </h2>
+      <div class="is-flex">
+        <h2 class="title is-flex-grow-1 is-size-4 has-text-white">
+          Reviews
+        </h2>
+        <a class="button is-primary" v-if="!write_review" @click="toggle_review">New Review</a>
+      </div>
+
+      <div class="container" v-if="write_review">
+        <div class="box has-background-grey">
+          <div class="container has-text-centered is-size-4">
+
+            <span @click="set_star(1)">
+              <span class="icon has-text-warning" v-if="stars > 0">
+                <i class="fa fas-fw fa-star"></i>
+              </span>
+              <span class="icon" v-else>
+                <i class="fa fas-fw fa-star"></i>
+              </span>
+            </span>
+
+            <span @click="set_star(2)">
+              <span class="icon has-text-warning" v-if="stars > 1">
+                <i class="fa fas-fw fa-star"></i>
+              </span>
+              <span class="icon" v-else>
+                <i class="fa fas-fw fa-star"></i>
+              </span>
+            </span>
+
+            <span @click="set_star(3)">
+              <span class="icon has-text-warning" v-if="stars > 2">
+                <i class="fa fas-fw fa-star"></i>
+              </span>
+              <span class="icon" v-else>
+                <i class="fa fas-fw fa-star"></i>
+              </span>
+            </span>
+
+            <span @click="set_star(4)">
+              <span class="icon has-text-warning" v-if="stars > 3">
+                <i class="fa fas-fw fa-star"></i>
+              </span>
+              <span class="icon" v-else>
+                <i class="fa fas-fw fa-star"></i>
+              </span>
+            </span>
+
+            <span @click="set_star(5)">
+              <span class="icon has-text-warning" v-if="stars > 4">
+                <i class="fa fas-fw fa-star"></i>
+              </span>
+              <span class="icon" v-else>
+                <i class="fa fas-fw fa-star"></i>
+              </span>
+            </span>
+
+          </div>
+          <div class="field">
+            <div class="control">
+              <input type="text" v-model="review_body" class="input">
+            </div>
+          </div>
+          <a class="button is-link" @click="submit_review">Submit</a>
+          <a class="button is-danger" @click="toggle_review">Cancel</a>
+        </div>
+      </div>
+
+      <div class="container" v-else>
+
+      </div>
     </div>
   </div>
 </div>
