@@ -69,7 +69,7 @@
           <div class="navbar-item">
             <div class="buttons">
               [[if globals().get('user'):]]
-                <div class="navbar-item has-dropdown is-hoverable">
+                <div class="navbar-item has-dropdown is-hoverable" >
                   <a class="navbar-link is-primary">
                     [[=globals().get('user').get('email')]]
                   </a>
@@ -80,10 +80,12 @@
                   </div>
                 </div>
               [[else:]]
+              <div v-if="not_logged_in">
                 <a class="button is-link" href="[[=URL('register_user')]]">Sign up</a>
                 <a class="button is-success" href="[[=URL('login_user')]]">Log in</a>
                 <!--  <a class="button is-link" href="[[=URL('auth/register')]]">Sign up</a>
                 <a class="button is-success" href="[[=URL('auth/login')]]">Log in</a> -->
+              </div>
               [[pass]]
             </div>
           </div>
