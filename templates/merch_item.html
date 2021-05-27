@@ -1,0 +1,85 @@
+[[extend 'layout.html']]
+
+<div class="section has-background-dark" id="vue-target">
+  <div class="container">
+
+    <div class="columns">
+      <div class="column has-text-centered">
+        <h1 class="title has-text-white is-size-4">
+          {{item.name}}
+        </h1>
+      </div>
+    </div>
+
+    <div class="columns">
+      <div class="column">
+        <div class="box">
+          <img src="https://storage.googleapis.com/luca-teaching/lion-layers-2.svg">
+        </div>
+      </div>
+
+      <div class="column">
+
+        <div class="columns">
+
+          <div class="column">
+            <div class="box has-background-grey">
+              <div class="columns" v-if="item.stock > 0">
+                <div class="column is-flex-grow-1">
+                  <p class="content is-size-5">
+                    $ {{item.cost}}
+                  </p>
+                </div>
+                <div class="column">
+                  <a class="button is-primary">Add to Cart</a>
+                </div>
+              </div>
+              <div v-else>
+                <p class="content is-size-5">
+                  Out Of Stock
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="column">
+            <div class="box has-background-grey">
+              <p class="content is-size-5">
+                Category: {{item.type}}
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="box has-background-grey">
+          <p class="content">
+            {{item.description}}
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="box has-background-dark">
+      <h2 class="title is-size-4 has-text-white">
+        Reviews
+      </h2>
+    </div>
+  </div>
+</div>
+
+[[block page_scripts]]
+<script>
+  let item = {
+    'name': '[[=item.item_name]]',
+    'cost': parseFloat('[[=item.item_cost]]'),
+    'stock': parseInt('[[=item.item_stock]]'),
+    'description': '[[=item.item_description]]',
+    'image_path': '[[=item.item_image]]',
+    'type': '[[=item.item_type]]',
+    'id': '[[=item.id]]'
+  };
+</script>
+<script src="js/merch_item.js"></script>
+[[end]]
