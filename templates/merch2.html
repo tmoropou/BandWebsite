@@ -1,6 +1,6 @@
 [[extend 'layout.html']]
 
-<div class="section has-background-dark" id="vue-target">
+<div class="section has-background-dark">
   <div class="container">
     <button class="button is-black has-text-white">Filter Results</button>
       [[for row in rows:]]
@@ -8,17 +8,20 @@
           <div class="columns mt-6 mb-6">
         [[pass]]
         <div class="column is-3 has-text-centered has-text-white">
-          <figure class="image">
-            <img src="https://storage.googleapis.com/luca-teaching/lion-layers-2.svg">
-          </figure>
-          <p>[[=row.item_name]]<br>$[[=row.item_cost]]
-          <br><br>
-            [[if row.item_stock > 0:]]
-              <button class="button is-primary has-text-white">Add To Cart</button>
-            [[else:]]
-              <button class="button is-primary" title="Disabled button" disabled>Out Of Stock</button>
-            [[pass]]
-          </p>
+          <div class="box has-background-grey" href="[[=URL('admin')]]">
+            <figure class="image">
+              <img src="https://storage.googleapis.com/luca-teaching/lion-layers-2.svg">
+            </figure>
+            <p>[[=row.item_name]]<br>$[[=row.item_cost]]
+            <br><br>
+              <a class="button is-info has-text-white" href="[[=URL('merch_item', row.id)]]">Inspect</a>
+              [[if row.item_stock > 0:]]
+                <a class="button is-primary has-text-white">Add to Cart</a>
+              [[else:]]
+                <button class="button is-primary" title="Disabled button" disabled>Out Of Stock</button>
+              [[pass]]
+            </p>
+          </div>
         </div>
       <div class="column is-1">
       </div>

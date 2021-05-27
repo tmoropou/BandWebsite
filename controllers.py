@@ -104,6 +104,15 @@ def merch():
         item_counter=item_counter
     )
 
+@action('merch_item/<merch_id:int>')
+@action.uses(db, session, 'merch_item.html')
+def merch_item(merch_id=None):
+    assert merch_id is not None
+    item = db(db.merch.id == merch_id).select().first()
+    if item == None:
+        redirect(URL('merch'))
+    return dict(item=item)
+
 @action('edit_merch/<merch_id:int>')
 @action.uses(url_signer.verify(), db, session, auth.user, 'edit_merch.html')
 def edit_merch(merch_id=None):
