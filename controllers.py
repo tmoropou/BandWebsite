@@ -25,6 +25,7 @@ session, db, T, auth, and tempates are examples of Fixtures.
 Warning: Fixtures MUST be declared with @action.uses({fixtures}) else your app will result in undefined behavior
 """
 
+from inspect import signature
 from py4web import action, request, abort, redirect, URL
 from yatl.helpers import A
 from .common import db, session, T, cache, auth, logger, authenticated, unauthenticated, flash
@@ -52,6 +53,7 @@ def index():
 def admin_index():
     # Gets all admins
     admins = db(db.account.user_admin == 1).select()
+    merch_rows = db(db.merch.item_cost != None).select()
 
     # Checks if user is one of the admins
     userIsAdmin = False
@@ -67,7 +69,9 @@ def admin_index():
     return dict(
         admin=admin,
         url_signer=url_signer,
-        vidRows=vidRows
+        vidRows=vidRows,
+        merch_rows=merch_rows,
+        delete_item_url=URL('delete_item', signer=url_signer)
     )
 
 @action('check_admin', method=["GET"])
@@ -84,6 +88,8 @@ def check_admin():
 def about():
     return dict()
 
+### Merch Endpoints
+
 @action('merch')
 @action.uses(db, auth, 'merch2.html')
 def merch():
@@ -92,7 +98,78 @@ def merch():
     item_counter = 0
     for i in rows:
         item_counter = item_counter + 1
-    return dict(rows=rows, column_counter=column_counter, item_counter=item_counter)
+    return dict(
+        rows=rows,
+        column_counter=column_counter,
+        item_counter=item_counter
+    )
+
+@action('merch_item/<merch_id:int>')
+@action.uses(db, session, 'merch_item.html')
+def merch_item(merch_id=None):
+    assert merch_id is not None
+    item = db(db.merch.id == merch_id).select().first()
+    if item == None:
+        redirect(URL('merch'))
+    return dict(item=item)
+
+@action('edit_merch/<merch_id:int>')
+@action.uses(url_signer.verify(), db, session, auth.user, 'edit_merch.html')
+def edit_merch(merch_id=None):
+    assert merch_id is not None
+    if merch_id == -1:
+        item = db(db.merch.id).select().first()
+        item.id = -1
+    else:
+        item = db(db.merch.id == merch_id).select().first()
+    if item == None:
+        redirect(URL('admin'))
+    return dict(
+        item=item,
+        update_item_url=URL('update_item', signer=url_signer)
+    )
+
+@action('update_item', method=["GET", "POST"])
+@action.uses(db, session, auth.user, url_signer.verify())
+def update_item():
+    body = request.json.get('body')
+    admin = db(db.account.user_email == get_user_email()).select().first().user_admin
+    if admin == 0:
+        redirect(URL('index'))
+    else:
+        if body["id"] == '-1' or body["id"] == -1:
+            id = db.merch.insert(
+                item_name = body["name"],
+                item_cost = body["cost"],
+                item_description = body["description"],
+                item_stock = body["stock"],
+                item_image = body["image_path"],
+                item_type = body["type"]
+            )
+            return dict(id=id)
+        else:
+            db.merch.update_or_insert((db.merch.id == body.get("id")),
+                item_name = body["name"],
+                item_cost = body["cost"],
+                item_description = body["description"],
+                item_stock = body["stock"],
+                item_image = body["image_path"],
+                item_type = body["type"]
+            )
+    return 'ok'
+
+@action('delete_item', method=["GET", "POST"])
+@action.uses(db, session, url_signer.verify())
+def delete_item():
+    id = request.params.get('id')
+    admin = db(db.account.user_email == get_user_email()).select().first().user_admin
+    if admin == 0:
+        redirect(URL('index'))
+    else:
+        db(db.merch.id == id).delete()
+    return 'ok'
+
+### Video Endpoints
 
 @action('video')
 @action.uses(db, auth, 'video.html')
@@ -259,6 +336,7 @@ def delete_comment():
         return 'rejected'
     return 'ok'
 
+
 @action('add_to_cart_redirect/<item_id:int>')
 @action.uses(db)
 def add_to_cart_redirect(item_id=None):
@@ -301,3 +379,4 @@ def delete_from_cart():
     cart = db(db.account.user_email == user).select(db.account.shoppingCart)
     cart.update_record(items=cart.merch_list.remove(item_ref))
     return "ok"
+

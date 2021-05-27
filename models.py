@@ -47,6 +47,12 @@ db.account.id.readable = db.account.id.writable = False
 db.account.user_password.writable = db.account.user_password.readable = False
 db.account.user_admin.writable = db.account.user_admin.readable = False
 
+### Define Current User Table
+db.define_table(
+    'current_user',
+    Field('account_id', 'reference account'),
+)
+
 ### Define Video Address table
 db.define_table(
     'video',

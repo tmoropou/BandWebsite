@@ -55,14 +55,6 @@
           <a class="navbar-item" href="[[=URL('about')]]">
             Bio
           </a>
-          [[if globals().get('user'):]]
-            <a
-              class="navbar-item"
-              href="[[=URL('admin')]]"
-            >
-              admin
-            </a>
-          [[pass]]
         </div>
 
         <div class="navbar-end">
@@ -77,7 +69,7 @@
           <div class="navbar-item">
             <div class="buttons">
               [[if globals().get('user'):]]
-                <div class="navbar-item has-dropdown is-hoverable">
+                <div class="navbar-item has-dropdown is-hoverable" >
                   <a class="navbar-link is-primary">
                     [[=globals().get('user').get('email')]]
                   </a>
@@ -90,6 +82,7 @@
               [[else:]]
                 <a class="button is-link" href="[[=URL('auth/register')]]">Sign up</a>
                 <a class="button is-success" href="[[=URL('auth/login')]]">Log in</a>
+              </div>
               [[pass]]
             </div>
           </div>

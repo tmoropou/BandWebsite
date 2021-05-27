@@ -1,6 +1,15 @@
 [[extend 'layout.html']]
 
-<div class="section has-background-dark">
+<div class="section has-background-dark" id="vue-target">
+  [[if globals().get('user'):]]
+    <a
+      class="button is-link"
+      href="[[=URL('admin')]]"
+      v-if="admin_flag"
+    >
+      admin
+    </a>
+  [[pass]]
   <div class="title has-text-centered">
     <h1 class="title has-text-white">Latest News Update...</h1>
   </div>
@@ -12,3 +21,10 @@
   </div>
 
 </div>
+
+[[block page_scripts]]
+<script>
+  let check_admin_url = "[[=URL('check_admin')]]";
+</script>
+<script src="js/video_page.js"></script>
+[[end]]

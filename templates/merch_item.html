@@ -1,0 +1,152 @@
+[[extend 'layout.html']]
+
+<div class="section has-background-dark" id="vue-target" v-cloak>
+  <div class="container">
+
+    <div class="columns">
+      <div class="column has-text-centered">
+        <h1 class="title has-text-white is-size-4">
+          {{item.name}}
+        </h1>
+      </div>
+    </div>
+
+    <div class="columns">
+      <div class="column">
+        <div class="box">
+          <img src="https://storage.googleapis.com/luca-teaching/lion-layers-2.svg">
+        </div>
+      </div>
+
+      <div class="column">
+
+        <div class="columns">
+
+          <div class="column">
+            <div class="box has-background-grey">
+              <div class="columns" v-if="item.stock > 0">
+                <div class="column is-flex-grow-1">
+                  <p class="content is-size-5">
+                    $ {{item.cost}}
+                  </p>
+                </div>
+                <div class="column">
+                  <a class="button is-primary">Add to Cart</a>
+                </div>
+              </div>
+              <div v-else>
+                <p class="content is-size-5">
+                  Out Of Stock
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="column">
+            <div class="box has-background-grey">
+              <p class="content is-size-5">
+                Category: {{item.type}}
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="box has-background-grey">
+          <p class="content">
+            {{item.description}}
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="box has-background-dark">
+      <div class="is-flex">
+        <h2 class="title is-flex-grow-1 is-size-4 has-text-white">
+          Reviews
+        </h2>
+        <a class="button is-primary" v-if="!write_review" @click="toggle_review">New Review</a>
+      </div>
+
+      <div class="container" v-if="write_review">
+        <div class="box has-background-grey">
+          <div class="container has-text-centered is-size-4">
+
+            <span @click="set_star(1)">
+              <span class="icon has-text-warning" v-if="stars > 0">
+                <i class="fa fas-fw fa-star"></i>
+              </span>
+              <span class="icon" v-else>
+                <i class="fa fas-fw fa-star"></i>
+              </span>
+            </span>
+
+            <span @click="set_star(2)">
+              <span class="icon has-text-warning" v-if="stars > 1">
+                <i class="fa fas-fw fa-star"></i>
+              </span>
+              <span class="icon" v-else>
+                <i class="fa fas-fw fa-star"></i>
+              </span>
+            </span>
+
+            <span @click="set_star(3)">
+              <span class="icon has-text-warning" v-if="stars > 2">
+                <i class="fa fas-fw fa-star"></i>
+              </span>
+              <span class="icon" v-else>
+                <i class="fa fas-fw fa-star"></i>
+              </span>
+            </span>
+
+            <span @click="set_star(4)">
+              <span class="icon has-text-warning" v-if="stars > 3">
+                <i class="fa fas-fw fa-star"></i>
+              </span>
+              <span class="icon" v-else>
+                <i class="fa fas-fw fa-star"></i>
+              </span>
+            </span>
+
+            <span @click="set_star(5)">
+              <span class="icon has-text-warning" v-if="stars > 4">
+                <i class="fa fas-fw fa-star"></i>
+              </span>
+              <span class="icon" v-else>
+                <i class="fa fas-fw fa-star"></i>
+              </span>
+            </span>
+
+          </div>
+          <div class="field">
+            <div class="control">
+              <input type="text" v-model="review_body" class="input">
+            </div>
+          </div>
+          <a class="button is-link" @click="submit_review">Submit</a>
+          <a class="button is-danger" @click="toggle_review">Cancel</a>
+        </div>
+      </div>
+
+      <div class="container" v-else>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+[[block page_scripts]]
+<script>
+  let item = {
+    'name': '[[=item.item_name]]',
+    'cost': parseFloat('[[=item.item_cost]]'),
+    'stock': parseInt('[[=item.item_stock]]'),
+    'description': '[[=item.item_description]]',
+    'image_path': '[[=item.item_image]]',
+    'type': '[[=item.item_type]]',
+    'id': '[[=item.id]]'
+  };
+</script>
+<script src="js/merch_item.js"></script>
+[[end]]
