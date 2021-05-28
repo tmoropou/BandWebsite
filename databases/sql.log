@@ -1318,3 +1318,23 @@ success!
 success!
 success!
 success!
+success!
+success!
+timestamp: 2021-05-27T22:47:43.422516
+CREATE TABLE "shoppingCart"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user" CHAR(512),
+    "merch_list" TEXT,
+    "item_count" INTEGER
+);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!

@@ -1,0 +1,35 @@
+[[extend 'layout.html']]
+
+<div class="section has-background-dark" id="vue-target">
+  <div class="container">
+    <button class="button is-black has-text-white">Filter Results</button>
+    <div v-for="r in cart">
+      <div v-show="r._idx % 3 == 0" class="columns mt-6 mb-6">
+        <div  class="column is-3 has-text-centered has-text-white">
+          <div class="box has-background-grey" href="[[=URL('admin')]]">
+            <figure class="image">
+              <img src="https://storage.googleapis.com/luca-teaching/lion-layers-2.svg">
+            </figure>
+            <p>{{r.item_name}}<br>{{r.item_cost}}
+            <br><br>
+              <a class="button is-info has-text-white">Inspect</a>
+              <a v-if="r.item_stock > 0" class="button is-primary has-text-white">Add to Cart</a>
+              <button v-if="r.item_stock <= 0" class="button is-primary" title="Disabled button" disabled>Out Of Stock</button>
+            </p>
+          </div>
+        </div>
+        <div class="column is-1">
+        </div>
+      </div>
+      </div>
+  </div>
+</div>
+
+[[block page_scripts]]
+<!-- Loads the index-specific js for Vue -->
+<script>
+  let load_merch_url = "[[=XML(load_merch_url)]]";
+</script>
+<script src="js/shoppingCart.js"></script>
+
+[[end]]

@@ -101,8 +101,39 @@ def merch():
     return dict(
         rows=rows,
         column_counter=column_counter,
-        item_counter=item_counter
+        item_counter=item_counter,
+        add_to_cart_url=URL('add_to_cart'),
     )
+
+
+
+@action('test')
+@action.uses(db, auth, 'Testmerch.html')
+def merch():
+    rows = db(db.merch.item_cost != None).select()
+    column_counter = 0
+    item_counter = 0
+    for i in rows:
+        item_counter = item_counter + 1
+    return dict(
+        rows=rows,
+        column_counter=column_counter,
+        item_counter=item_counter,
+        load_merch_url=URL('load_merch'),
+    )
+
+@action('load_merch')
+@action.uses(db)
+def load_merch():
+    rows = db(db.merch.item_cost != None).select().as_list()
+    print(rows)
+    column_counter = 0
+    item_counter = 0
+    for i in rows:
+        item_counter = item_counter + 1
+    return dict(rows=rows,
+                column_counter=column_counter,
+                item_counter=item_counter)
 
 @action('merch_item/<merch_id:int>')
 @action.uses(db, session, 'merch_item.html')
@@ -356,27 +387,34 @@ def add_to_cart_redirect(item_id=None):
 @action('add_to_cart')
 @action.uses(db) #might want to not use verify yet for testing purposes
 def add_to_cart():
-    print("hello?")
-    #user = get_user_email()
-    #item_id = request.params.get("item")
-    #item_ref = db(db.merch.id == item_id).select()
-    #cart = db(db.account.user_email == user).select(db.account.shoppingCart)
-    #cart.update_record(items=cart.merch_list.append(item_ref))
+    user = get_user_email()
     item_id = request.params.get('id')
     assert item_id is not None
-    print("id is: ")
-    print(item_id)
-    print('it worked')
+    item_ref = db(db.merch.id == item_id).select().first()
+    cart = db(db.shoppingCart.user == user).select().first()
+    if cart is None:
+        list = []
+        list.append(item_ref)
+        db.shoppingCart.insert(user=get_user_email(), merch_list=list, item_count=1)
+    else:
+        list = cart.merch_list
+        list.append(item_ref)
+        count = cart.item_count
+        db(db.shoppingCart.user == user).update(merch_list=list, item_count=count + 1)
     return "ok"
 
 
 @action('delete_from_cart')
 @action.uses(db) #might want to not use verify yet for testing purposes
 def delete_from_cart():
-    user = get_user_email()
-    item_id = request.params.get("item")
-    item_ref = db(db.merch.id == item_id).select()
-    cart = db(db.account.user_email == user).select(db.account.shoppingCart)
-    cart.update_record(items=cart.merch_list.remove(item_ref))
+    #-------------------------
+    #NOT IMPLEMENTED DO NOT USE
+    #--------------------------
+
+    #user = get_user_email()
+    #item_id = request.params.get("item")
+    #item_ref = db(db.merch.id == item_id).select()
+    #cart = db(db.account.user_email == user).select(db.account.shoppingCart)
+    #cart.update_record(items=cart.merch_list.remove(item_ref))
     return "ok"
 

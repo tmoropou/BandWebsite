@@ -78,8 +78,8 @@ db.define_table(
 
 db.define_table(
     'shoppingCart',
-    Field('user', 'reference account'),
-    Field('merch_list', 'list:reference', default=[]),
+    Field('user', default=get_user_email),
+    Field('merch_list', 'list:integer', default=[]),
     Field('item_count', 'integer'),
 )
 

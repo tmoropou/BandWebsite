@@ -21,9 +21,9 @@ let init = (app) => {
     };
 
     app.add_to_cart = function (id) {
-        //axios.get(add_to_cart_url, {params: {id: id}}).then( function () {
-          //  app.vue.cart.push(id);
-        //});
+        axios.get(add_to_cart_url, {params: {id: id}}).then( function () {
+            app.vue.cart.push(id);
+        });
     };
 
 
@@ -43,14 +43,7 @@ let init = (app) => {
 
     app.init = () => {
         // Do any initializations (e.g. networks calls) here.
-        axios.get(load_merch_url).then(function (response) {
-            cart = response.data.rows;
-            app.enumerate(cart);
-            app.vue.cart = cart;
-            app.vue.column_counter = response.data.column_counter;
-            app.vue.item_counter = response.data.item_counter;
-            console.log(app.vue.cart);
-        });
+
     };
 
     // Call to the initializer.
