@@ -32,8 +32,19 @@ let init = (app) => {
         app.vue.stars = count;
     }
 
+    app.load_reviews = function () {
+        axios.get(load_reviews_url).then(function (response) {
+            app.vue.rows = app.enumerate(response.data.rows);
+        });
+    }
+
     app.submit_review = function () {
         console.log(app.vue.stars, app.vue.review_body);
+        axios.post(add_review_url, {
+            body: app.vue.review_body,
+        }).then(function (response) {
+            app.load_reviews();
+        })
         app.toggle_review();
     }
 
@@ -60,6 +71,7 @@ let init = (app) => {
 
     app.init = () => {
         // Do any initializations (e.g. networks calls) here.
+        app.check_logged();
         app.vue.item = item;
     };
 

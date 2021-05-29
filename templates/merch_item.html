@@ -66,7 +66,7 @@
         <h2 class="title is-flex-grow-1 is-size-4 has-text-white">
           Reviews
         </h2>
-        <a class="button is-primary" v-if="!write_review" @click="toggle_review">New Review</a>
+        <a class="button is-primary" v-if="!write_review && logged_in" @click="toggle_review">New Review</a>
       </div>
 
       <div class="container" v-if="write_review">
@@ -147,6 +147,9 @@
     'type': '[[=item.item_type]]',
     'id': '[[=item.id]]'
   };
+  let load_reviews_url = "[[=XML(load_reviews_url)]]";
+  let add_review_url = "[[=XML(add_review_url)]]";
+  let global_email = "[[=globals().get('user').get('email')]]";
 </script>
 <script src="js/merch_item.js"></script>
 [[end]]

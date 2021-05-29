@@ -105,8 +105,6 @@ def merch():
         add_to_cart_url=URL('add_to_cart'),
     )
 
-
-
 @action('test')
 @action.uses(db, auth, 'Testmerch.html')
 def merch():
@@ -136,13 +134,17 @@ def load_merch():
                 item_counter=item_counter)
 
 @action('merch_item/<merch_id:int>')
-@action.uses(db, session, 'merch_item.html')
+@action.uses(db, session, auth.user, 'merch_item.html')
 def merch_item(merch_id=None):
     assert merch_id is not None
     item = db(db.merch.id == merch_id).select().first()
     if item == None:
         redirect(URL('merch'))
-    return dict(item=item)
+    return dict(
+        item=item,
+        add_review_url=URL('add_review', signer=url_signer),
+        load_reviews_url=URL('load_review', signer=url_signer)
+    )
 
 @action('edit_merch/<merch_id:int>')
 @action.uses(url_signer.verify(), db, session, auth.user, 'edit_merch.html')
@@ -199,6 +201,19 @@ def delete_item():
     else:
         db(db.merch.id == id).delete()
     return 'ok'
+
+### Review Endpoints
+
+@action('add_review', method=["GET", "POST"])
+@action.uses(db, session, auth.user, url_signer.verify())
+def add_review():
+    return 'ok'
+
+@action('load_review', method=["GET"])
+@action.uses(db, session, url_signer.verify())
+def load_review():
+    rows = []
+    return dict(rows=rows)
 
 ### Video Endpoints
 
