@@ -207,12 +207,21 @@ def delete_item():
 @action('add_review', method=["GET", "POST"])
 @action.uses(db, session, auth.user, url_signer.verify())
 def add_review():
+    body = request.json.get('body')
+    db.review.update_or_insert(
+        (db.review.user_email == get_user_email()),
+        user_email = get_user_email(),
+        review_body = body,
+        item_id = request.json.get('item_id'),
+        review_score=request.json.get('review_score'),
+    )
     return 'ok'
 
 @action('load_review', method=["GET"])
 @action.uses(db, session, url_signer.verify())
 def load_review():
-    rows = []
+    id = request.params.get('item_id')
+    rows = db(db.review.item_id == id).select().as_list()
     return dict(rows=rows)
 
 ### Video Endpoints

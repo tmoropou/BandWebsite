@@ -130,7 +130,60 @@
       </div>
 
       <div class="container" v-else>
-
+        <div class="block" v-for="r in rows">
+          <div class="box has-background-grey">
+            <div class="container has-text-centered is-size-4">
+  
+              <span>
+                <span class="icon has-text-warning" v-if="r.review_score > 0">
+                  <i class="fa fas-fw fa-star"></i>
+                </span>
+                <span class="icon" v-else>
+                  <i class="fa fas-fw fa-star"></i>
+                </span>
+              </span>
+  
+              <span>
+                <span class="icon has-text-warning" v-if="r.review_score > 1">
+                  <i class="fa fas-fw fa-star"></i>
+                </span>
+                <span class="icon" v-else>
+                  <i class="fa fas-fw fa-star"></i>
+                </span>
+              </span>
+  
+              <span>
+                <span class="icon has-text-warning" v-if="r.review_score > 2">
+                  <i class="fa fas-fw fa-star"></i>
+                </span>
+                <span class="icon" v-else>
+                  <i class="fa fas-fw fa-star"></i>
+                </span>
+              </span>
+  
+              <span>
+                <span class="icon has-text-warning" v-if="r.review_score > 3">
+                  <i class="fa fas-fw fa-star"></i>
+                </span>
+                <span class="icon" v-else>
+                  <i class="fa fas-fw fa-star"></i>
+                </span>
+              </span>
+  
+              <span>
+                <span class="icon has-text-warning" v-if="r.review_score > 4">
+                  <i class="fa fas-fw fa-star"></i>
+                </span>
+                <span class="icon" v-else>
+                  <i class="fa fas-fw fa-star"></i>
+                </span>
+              </span>
+  
+            </div>
+            <p class="has-text-black"> {{r.review_body}} </p>
+            <p class="has-text-white"> {{r.user_email}} </p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
