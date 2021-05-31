@@ -14,12 +14,13 @@
     <!-- Logo bar -->
     <nav class="navbar is-black">
       <div class="navbar-menu">
+        <!-- changed the in-line css to the bulma way -->
         <div
-          class="navbar-start"
-          style="flex-grow: 1; justify-content: center;"
+          class="navbar-start is-flex-grow-1 is-justify-content-center"
         >
-          <a class="navbar-item" href="[[=URL('index')]]">
-            <img class="image " width="640" src="images/logo_side.png">
+        <!-- The class="navbar-item" in the anchor bellow was removed to fix the bad ratio of image-->
+          <a href="[[=URL('index')]]">
+              <img class="image" width="320" src="images/logo_side.png">
           </a>
         </div>
       </div>
