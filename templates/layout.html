@@ -14,12 +14,13 @@
     <!-- Logo bar -->
     <nav class="navbar is-black">
       <div class="navbar-menu">
+        <!-- changed the in-line css to the bulma way -->
         <div
-          class="navbar-start"
-          style="flex-grow: 1; justify-content: center;"
+          class="navbar-start is-flex-grow-1 is-justify-content-center"
         >
-          <a class="navbar-item" href="[[=URL('index')]]">
-            <img class="image " width="640" src="images/logo_side.png">
+        <!-- The class="navbar-item" in the anchor bellow was removed to fix the bad ratio of image-->
+          <a href="[[=URL('index')]]">
+              <img class="image pt-5" width="580" src="images/logo_side.png">
           </a>
         </div>
       </div>
@@ -67,14 +68,20 @@
           </div>
 
           [[if globals().get('user'):]]
-          <div class="navbar-item">
-            <p>[[=globals().get('user').get('email')]]</p>
-          </div>
+            <div class="navbar-item has-dropdown pb-2 is-hoverable" >
+              <a class="navbar-link is-primary">
+                [[=globals().get('user').get('email')]]
+              </a>
+                <div class="navbar-dropdown is-dark">
+                  <a class="dropdown-item has-text-black" href="[[=URL('auth/logout')]]">Logout</a>
+                  <a class="navbar-item has-text-black" href="[[=URL('profile')]]">Profile</a>
+                  <a class="navbar-item has-text-black" href="[[=URL('auth/change_password')]]">Change Password</a></li>
+              </div>
+            </div>
           [[pass]]
           <div class="navbar-item">
             <div class="buttons">
               [[if globals().get('user'):]]
-              <a class="button is-light" href="[[=URL('auth/logout')]]">Sign Out</a>
               [[else:]]
               <a class="button is-link" href="[[=URL('auth/plugin/oauth2google/login', vars=dict(next='../index'))]]">Sign In</a>
               [[pass]]
@@ -90,12 +97,6 @@
     <!-- end of HTML inserted by extending template -->
     <footer class="footer">
       <div class="content has-text-centered">
-        <h2>
-          Sign up for the news letter!
-        </h2>
-        <a class="button is-primary" href="[[=URL('newsreg')]]">
-          <span> I want to receive the digital newsletter </span>
-        </a>
         <div>
           Social Media:
         </div>
@@ -108,7 +109,7 @@
             <span class="icon"><i class="fa fa-fw fa-twitter"></i></span>
           </a>
           <a class="button is-info"
-            href="https://instagram.com/the_takeouts"
+            href="https://www.instagram.com/takeouts.band/"
             target="_blank"
             rel="noopener noreferrer"
           >

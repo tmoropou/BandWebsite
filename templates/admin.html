@@ -24,13 +24,13 @@
           <td>[[=v.video_name]]</td>
           <td>[[=v.video_url]]</td>
           <td>
-            <a 
+            <a
               class='button is-warning'
               href="[[=URL('bump_video', v.id, signer=url_signer)]]"
             >
               Bump to Front
             </a>
-            <a 
+            <a
               class='button is-danger'
               href="[[=URL('delete_video', v.id, signer=url_signer)]]"
             >
@@ -50,7 +50,7 @@
       <th> Cost </th>
       <th> Stock </th>
       <th> Image Path </th>
-      <th> 
+      <th>
         <a
           class="button is-info"
           href="[[=URL('edit_merch', -1, signer=url_signer)]]"
@@ -65,13 +65,13 @@
           <td>[[=m.item_stock]]</td>
           <td>[[=m.item_image]]</td>
           <td>
-            <a 
+            <a
               class='button is-warning'
               href="[[=URL('edit_merch', m.id, signer=url_signer)]]"
             >
               Edit
             </a>
-            <a 
+            <a
               class='button is-danger'
               @click="delete_merch_item([[=m.id]])"
             >
@@ -82,6 +82,30 @@
       [[pass]]
     </tbody>
   </table>
+  <div class="title has-text-centered">
+    <h2 class="title has-text-white"> User that Signed up newsletter </h2>
+  </div>
+  <table class="table is-fullwidth is-striped is-bordered">
+    <thead>
+      <th> First Name </th>
+      <th> Last name </th>
+      <th> Email </th>
+    </thead>
+    <tbody>
+      [[for n in newsletterusers:]]
+        <tr>
+          <td>[[=n.user_first_name]]</td>
+          <td>[[=n.user_last_name]]</td>
+          <td>[[=n.user_email]]</td>
+        </tr>
+      [[pass]]
+    </tbody>
+  </table>
+  <div class="title has-text-centered">
+    <h2 class="title has-text-white"> Easy Copy place </h2>
+    <textarea class="has-text-centered" rows="10" cols="100">[[for l in newsletterusers:]][[=l.user_email]]; [[pass]]</textarea>
+  </div>
+
 </div>
 
 [[block page_scripts]]

@@ -43,8 +43,18 @@ def index():
                                 user_password=get_user_password(),
                                 user_first_name=get_user_first_name(),
                                 user_last_name=get_user_last_name())
-
-    return dict(url_signer=url_signer)
+    # newsletter sign up part
+    newsnotsigned="true"
+    email = get_user_email()
+    if email == None:
+        newsnotsigned="true"
+    else:
+        news = db(db.account.user_email == email).select().first().newsletter
+        if news == None:
+            newsnotsigned="true"
+        elif news > 0:
+            newsnotsigned="false"
+    return dict(url_signer=url_signer, newsnotsigned=newsnotsigned)
 
 ### Admin methods and pages
 
@@ -66,12 +76,15 @@ def admin_index():
     # Get all videos
     vidRows = db(db.video.id > 0).select()
 
+    newsletterusers = db(db.account.newsletter > 0).select()
+
     return dict(
         admin=admin,
         url_signer=url_signer,
         vidRows=vidRows,
         merch_rows=merch_rows,
-        delete_item_url=URL('delete_item', signer=url_signer)
+        delete_item_url=URL('delete_item', signer=url_signer),
+        newsletterusers=newsletterusers,
     )
 
 @action('check_admin', method=["GET"])
@@ -93,7 +106,7 @@ def about():
 @action('merch')
 @action.uses(db, auth, 'merch2.html')
 def merch():
-    rows = db(db.merch.item_cost != None).select()
+    rows = db(db.merch.item_cost != None).select(orderby=~db.merch.item_stock|db.merch.item_name)
     column_counter = 0
     item_counter = 0
     for i in rows:
@@ -341,8 +354,21 @@ def picture_upload():
     return "ok"
 
 @action('newsreg')
-@action.uses(db, session, auth.user, 'newsletter.html')
+@action.uses(db, session, auth.user, url_signer.verify(), 'newsletter.html')
 def newsreg():
+    a = db(db.account.user_email == get_user_email()).select().first()
+    if a.newsletter is None:
+        a.newsletter = 1
+    elif a.newsletter == 0:
+        a.newsletter = 1
+    else:
+        a.newsletter = 0
+    a.update_record()
+    return dict()
+
+@action('newsdereg')
+@action.uses(db, session, auth.user, url_signer.verify(), 'newsletter2.html')
+def newsdereg():
     a = db(db.account.user_email == get_user_email()).select().first()
     if a.newsletter is None:
         a.newsletter = 1
@@ -441,4 +467,3 @@ def delete_from_cart():
     #cart = db(db.account.user_email == user).select(db.account.shoppingCart)
     #cart.update_record(items=cart.merch_list.remove(item_ref))
     return "ok"
-

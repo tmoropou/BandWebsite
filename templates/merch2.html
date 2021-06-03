@@ -5,12 +5,13 @@
     <button class="button is-black has-text-white">Filter Results</button>
       [[for row in rows:]]
         [[if column_counter == 0:]]
-          <div class="columns mt-6 mb-6">
+          <div class="columns ml-6 mt-6 mb-6 pl-5">
         [[pass]]
         <div class="column is-3 has-text-centered has-text-white">
           <div class="box has-background-grey" href="[[=URL('admin')]]">
-            <figure class="image">
-              <img src="https://storage.googleapis.com/luca-teaching/lion-layers-2.svg">
+            <figure class="image is-square">
+              <!-- <img src="https://storage.googleapis.com/luca-teaching/lion-layers-2.svg"> -->
+              <img src="[[=row.item_image]]">
             </figure>
             <p>[[=row.item_name]]<br>$[[=row.item_cost]]
             <br><br>
