@@ -72,7 +72,7 @@ db.define_table(
     Field('item_name', 'string', default="Item Name"),
     Field('item_description', 'string'),
     Field('item_stock', 'integer', default=0),
-    Field('item_image', 'upload', default='static/merch_images/in_stock/SmallSticker.png'),
+    Field('item_image'),
     Field('item_type', 'string')
 )
 
