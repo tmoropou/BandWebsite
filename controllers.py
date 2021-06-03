@@ -93,7 +93,7 @@ def about():
 @action('merch')
 @action.uses(db, auth, 'merch2.html')
 def merch():
-    rows = db(db.merch.item_cost != None).select()
+    rows = db(db.merch.item_cost != None).select(orderby=~db.merch.item_stock|db.merch.item_name)
     column_counter = 0
     item_counter = 0
     for i in rows:
