@@ -7,6 +7,7 @@ This file is provided as an example:
 """
 import os
 from py4web.core import required_folder
+from .private.secret_settings import *
 
 # db settings
 APP_FOLDER = os.path.dirname(__file__)
@@ -19,11 +20,22 @@ DB_POOL_SIZE = 1
 DB_MIGRATE = True
 DB_FAKE_MIGRATE = False  # maybe?
 
+# Google Cloud DB
+CLOUD_DB_URI = "google:MySQLdb://{USR}:{PW}#/{N}?unix_socket=/cloudsql/{C}".format(
+    USR=DB_USER,
+    N=DB_NAME,
+    PW=DB_PASSWORD,
+    C=DB_CONNECTION,
+)
+CLOUD_DB_POOL_SIZE = 1
+CLOUD_DB_MIGRATE = False
+CLOUD_DB_FAKE_MIGRATE = False
+
 # location where static files are stored:
-STATIC_FOLDER = required_folder(APP_FOLDER, "static")
+#STATIC_FOLDER = required_folder(APP_FOLDER, "static")
 
 # location where to store uploaded files:
-UPLOAD_FOLDER = required_folder(APP_FOLDER, "uploads")
+#UPLOAD_FOLDER = required_folder(APP_FOLDER, "uploads")
 
 # send email on regstration
 VERIFY_EMAIL = True
