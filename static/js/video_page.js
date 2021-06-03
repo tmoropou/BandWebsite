@@ -34,7 +34,7 @@ let init = (app) => {
         let load_comments_url_id = load_comments_url + "/" + app.vue.video_id;
         axios.get(load_comments_url_id).then(function (response) {
             app.vue.rows = app.enumerate(response.data.rows);
-        });        
+        });
     }
 
     app.add_comment = function() {

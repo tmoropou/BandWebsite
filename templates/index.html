@@ -87,6 +87,21 @@
         </div>
       </div>
     </div>
+    <!-- Newletter button here -->
+    <div class="content has-text-centered">
+      <h2 class="has-text-danger-dark" v-if="[[=newsnotsigned]]">
+        Sign up for the newsletter!
+      </h2>
+      <h2 class="has-text-warning" v-else>
+        You have already signed up the newsletter!
+      </h2>
+      <a class="button is-primary" href="[[=URL('newsreg', signer=url_signer)]]" v-if="[[=newsnotsigned]]">
+        <span> I want to receive the digital newsletter </span>
+      </a>
+      <a class="button is-primary" href="[[=URL('newsdereg', signer=url_signer)]]" v-else>
+        <span> I no longer want to receive the digital newsletter </span>
+      </a>
+    </div>
   </div>
 
 </div>
