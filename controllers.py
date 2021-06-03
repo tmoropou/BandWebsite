@@ -76,12 +76,15 @@ def admin_index():
     # Get all videos
     vidRows = db(db.video.id > 0).select()
 
+    newsletterusers = db(db.account.newsletter > 0).select()
+
     return dict(
         admin=admin,
         url_signer=url_signer,
         vidRows=vidRows,
         merch_rows=merch_rows,
-        delete_item_url=URL('delete_item', signer=url_signer)
+        delete_item_url=URL('delete_item', signer=url_signer),
+        newsletterusers=newsletterusers,
     )
 
 @action('check_admin', method=["GET"])
