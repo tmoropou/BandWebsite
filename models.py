@@ -38,7 +38,6 @@ db.define_table(
     Field('user_first_name', label="First Name", default=get_user_first_name()),
     Field('user_last_name', label="Last Name", default=get_user_last_name()),
     Field('user_username', label="Username"),
-    Field('picture'),
     Field('user_admin', 'integer', default=0),
     Field('newsletter', 'integer', default=0),
 )
@@ -46,6 +45,7 @@ db.define_table(
 db.account.id.readable = db.account.id.writable = False
 db.account.user_password.writable = db.account.user_password.readable = False
 db.account.user_admin.writable = db.account.user_admin.readable = False
+db.account.newsletter.writable = db.account.newsletter.readable = False
 
 ### Define Current User Table
 db.define_table(
