@@ -418,22 +418,6 @@ def delete_comment():
     return 'ok'
 
 
-@action('add_to_cart_redirect/<item_id:int>')
-@action.uses(db)
-def add_to_cart_redirect(item_id=None):
-    assert item_id is not None
-    cart = db(db.shoppingCart.user == get_user_email()).select().first()
-    if cart is None:
-        itemList = [item_id]
-        db.shoppingCart.insert(user=get_user_email(), merch_list=itemList, item_count=1)
-    else:
-        item_list = cart.merch_list
-        item_list.append(item_list)
-        count = cart.item_count + 1
-        db(db.shoppingCart.user == get_user_email()).update(merch_list=item_list, item_count=count)
-    redirect(URL('merch'))
-    return
-
 @action('add_to_cart')
 @action.uses(db) #might want to not use verify yet for testing purposes
 def add_to_cart():
@@ -443,27 +427,45 @@ def add_to_cart():
     item_ref = db(db.merch.id == item_id).select().first()
     cart = db(db.shoppingCart.user == user).select().first()
     if cart is None:
-        list = []
-        list.append(item_ref)
-        db.shoppingCart.insert(user=get_user_email(), merch_list=list, item_count=1)
+        merch_list = []
+        merch_list.append(item_ref)
+        db.shoppingCart.insert(user=get_user_email(), merch_list=merch_list, item_count=1)
     else:
-        list = cart.merch_list
-        list.append(item_ref)
+        merch_list = cart.merch_list
+        merch_list.append(item_ref)
         count = cart.item_count
-        db(db.shoppingCart.user == user).update(merch_list=list, item_count=count + 1)
+        db(db.shoppingCart.user == user).update(merch_list=merch_list, item_count=count + 1)
     return "ok"
 
 
-@action('delete_from_cart')
+@action('remove_from_cart')
 @action.uses(db) #might want to not use verify yet for testing purposes
-def delete_from_cart():
-    #-------------------------
-    #NOT IMPLEMENTED DO NOT USE
-    #--------------------------
+def remove_from_cart():
+    user = get_user_email()
+    item_id = request.params.get("id")
+    assert item_id is not None
+    cart = db(db.shoppingCart.user == user).select().first()
+    item_list = cart.merch_list
 
-    #user = get_user_email()
-    #item_id = request.params.get("item")
-    #item_ref = db(db.merch.id == item_id).select()
-    #cart = db(db.account.user_email == user).select(db.account.shoppingCart)
-    #cart.update_record(items=cart.merch_list.remove(item_ref))
+    if int(item_id) in item_list:
+        item_list.remove(int(item_id))
+        db(db.shoppingCart.user == user).update(merch_list=item_list)
     return "ok"
+
+@action('shopping_cart')
+@action.uses(db, auth, session, auth.user, 'shopping_cart.html')
+def shopping_cart():
+
+    return dict(get_cart_url=URL('get_cart'),
+                remove_from_cart_url=URL('remove_from_cart'),)
+
+@action('get_cart')
+@action.uses(db)
+def get_cart():
+    merch_in_cart = []
+    user = get_user_email()
+    cart = db(db.shoppingCart.user == user).select().first()
+    for item in cart.merch_list:
+        merch_ref = db(db.merch.id == item).select().as_list()
+        merch_in_cart.append(merch_ref[0])
+    return dict(merch=merch_in_cart, )

@@ -1,0 +1,42 @@
+[[extend 'layout.html']]
+
+<style>
+[v-cloak] {
+     display: none;
+}
+</style>
+
+
+<div class="section has-background-dark" id="vue-target" v-cloak>
+  <div class="container">
+    <table class="table is-fullwidth has-background-dark has-text-white">
+      <thead>
+        <th class="has-text-white">Image</th>
+        <th class="has-text-white">Name</th>
+        <th class="has-text-white">Cost</th>
+        <th class="has-text-white">Delete</th>
+      </thead>
+      <tbody>
+        <tr v-for="c in cart">
+          <td><figure class="image is-32x32 has-background-white">  <img :src="c.item_image"></figure></td>
+          <td>{{c.item_name}}</td>
+          <td>{{c.item_cost}}</td>
+          <td>
+            <span class="icon has-text-danger">
+              <i class="fa fa-lg fa-trash" @click="remove_from_cart(c._idx)"></i>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+[[block page_scripts]]
+<script>
+  let get_cart_url = "[[=XML(get_cart_url)]]";
+  let remove_from_cart_url = "[[=XML(remove_from_cart_url)]]";
+</script>
+<script src="js/shoppingCartPage.js"></script>
+[[end]]

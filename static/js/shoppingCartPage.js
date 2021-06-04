@@ -9,8 +9,6 @@ let init = (app) => {
     // This is the Vue data.
     app.data = {
         cart: [],
-        column_counter: 0,
-        item_counter: 0,
     };
 
     app.enumerate = (a) => {
@@ -20,17 +18,19 @@ let init = (app) => {
         return a;
     };
 
-    app.add_to_cart = function (id) {
-        //axios.get(add_to_cart_url, {params: {id: id}}).then( function () {
-          //  app.vue.cart.push(id);
-        //});
+    app.remove_from_cart = function (_idx) {
+        id = app.vue.cart[_idx].id
+        axios.get(remove_from_cart_url, {params: {id: id}}).then( function () {
+            //app.vue.cart.push(id);
+        });
+        //console.log(item_id);
     };
 
 
 
 
     app.methods = {
-        add_to_cart: app.add_to_cart,
+        remove_from_cart: app.remove_from_cart,
 
     };
 
@@ -43,13 +43,11 @@ let init = (app) => {
 
     app.init = () => {
         // Do any initializations (e.g. networks calls) here.
-        axios.get(load_merch_url).then(function (response) {
-            cart = response.data.rows;
-            app.enumerate(cart);
-            app.vue.cart = cart;
-            app.vue.column_counter = response.data.column_counter;
-            app.vue.item_counter = response.data.item_counter;
-            console.log(app.vue.cart);
+        axios.get(get_cart_url).then(function (response) {
+            merch = response.data.merch;
+            app.enumerate(merch);
+            app.vue.cart = merch;
+            console.log(merch);
         });
     };
 
