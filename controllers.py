@@ -118,20 +118,7 @@ def merch():
         add_to_cart_url=URL('add_to_cart'),
     )
 
-@action('test')
-@action.uses(db, auth, 'Testmerch.html')
-def merch():
-    rows = db(db.merch.item_cost != None).select()
-    column_counter = 0
-    item_counter = 0
-    for i in rows:
-        item_counter = item_counter + 1
-    return dict(
-        rows=rows,
-        column_counter=column_counter,
-        item_counter=item_counter,
-        load_merch_url=URL('load_merch'),
-    )
+
 
 @action('load_merch')
 @action.uses(db)
@@ -156,7 +143,8 @@ def merch_item(merch_id=None):
     return dict(
         item=item,
         add_review_url=URL('add_review', signer=url_signer),
-        load_reviews_url=URL('load_review', signer=url_signer)
+        load_reviews_url=URL('load_review', signer=url_signer),
+        add_to_cart_url = URL('add_to_cart'),
     )
 
 @action('edit_merch/<merch_id:int>')
