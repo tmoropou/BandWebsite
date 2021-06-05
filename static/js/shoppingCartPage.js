@@ -21,9 +21,8 @@ let init = (app) => {
     app.remove_from_cart = function (_idx) {
         id = app.vue.cart[_idx].id
         axios.get(remove_from_cart_url, {params: {id: id}}).then( function () {
-            //app.vue.cart.push(id);
+            app.vue.cart.splice(_idx, 1);
         });
-        //console.log(item_id);
     };
 
 
