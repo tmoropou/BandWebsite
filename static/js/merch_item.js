@@ -58,10 +58,16 @@ let init = (app) => {
         return false;
     }
 
+    app.add_to_cart = function (id) {
+        axios.get(add_to_cart_url, {params: {id: id}}).then( function () {
+        });
+    };
+
     app.methods = {
         toggle_review: app.toggle_review,
         set_star: app.set_star,
         submit_review: app.submit_review,
+        add_to_cart: app.add_to_cart,
     };
 
     // This creates the Vue instance.

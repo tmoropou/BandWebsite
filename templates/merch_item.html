@@ -34,7 +34,7 @@
                   </p>
                 </div>
                 <div class="column">
-                  <a class="button is-primary">Add to Cart</a>
+                  <a class="button is-primary" @click="add_to_cart(item.id)">Add to Cart</a>
                 </div>
               </div>
               <div v-else>
@@ -206,6 +206,8 @@
   let load_reviews_url = "[[=XML(load_reviews_url)]]";
   let add_review_url = "[[=XML(add_review_url)]]";
   let global_email = "[[=globals().get('user').get('email')]]";
+  let add_to_cart_url = "[[=XML(add_to_cart_url)]]";
+
 </script>
 <script src="js/merch_item.js"></script>
 [[end]]
