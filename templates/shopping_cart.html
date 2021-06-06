@@ -11,14 +11,14 @@
   <div class="container">
     <table class="table is-fullwidth has-background-dark has-text-white">
       <thead>
-        <th class="has-text-white">Image</th>
-        <th class="has-text-white">Name</th>
+        <th class="has-text-white"></th>
+        <th class="has-text-white">Item</th>
         <th class="has-text-white">Cost</th>
-        <th class="has-text-white">Delete</th>
+        <th class="has-text-white">Remove</th>
       </thead>
       <tbody>
         <tr v-for="c in cart">
-          <td><figure class="image is-32x32 has-background-white">  <img :src="c.item_image"></figure></td>
+          <td><figure class="image is-32x32 has-background-grey">  <img :src="c.item_image"></figure></td>
           <td>{{c.item_name}}</td>
           <td>{{c.item_cost}}</td>
           <td>
@@ -26,6 +26,12 @@
               <i class="fa fa-lg fa-trash" @click="remove_from_cart(c._idx)"></i>
             </span>
           </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td>Total: {{total}}</td>
+          <td></td>
         </tr>
       </tbody>
     </table>

@@ -9,6 +9,7 @@ let init = (app) => {
     // This is the Vue data.
     app.data = {
         cart: [],
+        total: 0,
     };
 
     app.enumerate = (a) => {
@@ -46,7 +47,14 @@ let init = (app) => {
             merch = response.data.merch;
             app.enumerate(merch);
             app.vue.cart = merch;
-            console.log(merch);
+            //console.log(merch.length);
+            //console.log(merch);
+            for (i=0; i<merch.length; i++){
+                app.vue.total = app.vue.total + merch[i].item_cost;
+                //console.log(merch[i].item_cost);
+                //console.log("hello");
+            };
+            //console.log(app.vue.total);
         });
     };
 
