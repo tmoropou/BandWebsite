@@ -30,6 +30,12 @@
       </tbody>
     </table>
   </div>
+  <div>
+    <h2 class="title is-6 has-text-white mt-6">Checkout</h2>
+    <div id="container">
+
+    </div>
+  </div>
 
 </div>
 
@@ -39,4 +45,68 @@
   let remove_from_cart_url = "[[=XML(remove_from_cart_url)]]";
 </script>
 <script src="js/shoppingCartPage.js"></script>
+
+<script>
+
+  const allowedPaymentMethods = ['CARD', 'TOKENIZED_CARD'];
+
+  const allowedCardNetworks = ['AMEX', 'DISCOVER', 'JCB', 'MASTERCARD', 'VISA'];
+
+  const tokenizationParameters = {
+    tokenizationType: 'PAYMENT_GATEWAY',
+    parameters: {
+      'gateway': 'example',
+      'gatewayMerchantId' : 'abc123'
+    }
+  };
+
+
+  const transactionInfo = {
+    currencyCode: 'USD',
+    totalPriceStatus: 'FINAL',
+    totalPrice: '100.00'
+  };
+
+  let gpayClient = false;
+
+  function onGooglePaymentButtonClicked() {
+  }
+
+  function addGooglePayButton() {
+    const button = getGooglePaymentsClient().createButton({
+      onClick: onGooglePaymentButtonClicked,
+      buttonType: 'short',
+      buttonColor: 'black',
+    });
+
+    document.getElementById('container').appendChild(button);
+  }
+
+  function onGooglePayLoaded() {
+    const paymentsClient = getGooglePaymentsClient();
+    paymentsClient.isReadyToPay({allowedPaymentMethods: allowedPaymentMethods})
+      .then(function(response) {
+        console.log('response', response);
+        if(response.result) {
+          addGooglePayButton();
+<!--          prefetchGooglePaymentData();-->
+        }
+      })
+      .catch(function(err) {
+        console.error(err);
+      });
+  }
+
+  function getGooglePaymentsClient() {
+    if (!gpayClient) {
+      gpayClient = new google.payments.api.PaymentsClient({environment: 'TEST'});
+    }
+
+    return gpayClient
+  }
+</script>
+
+<script async src="https://pay.google.com/gp/p/js/pay.js" onload="onGooglePayLoaded()">
+</script>
+
 [[end]]
