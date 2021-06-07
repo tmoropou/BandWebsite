@@ -37,8 +37,7 @@
     </table>
   </div>
   <div>
-    <h2 class="title is-6 has-text-white mt-6">Checkout</h2>
-    <div id="container">
+    <div id="container" class="pl-6 ml-6 mb-6 pb-6 is-centered">
 
     </div>
   </div>
@@ -50,7 +49,7 @@
   let get_cart_url = "[[=XML(get_cart_url)]]";
   let remove_from_cart_url = "[[=XML(remove_from_cart_url)]]";
 </script>
-<script src="js/shoppingCartPage.js"></script>
+
 
 <script>
 
@@ -66,23 +65,61 @@
     }
   };
 
-
   const transactionInfo = {
     currencyCode: 'USD',
     totalPriceStatus: 'FINAL',
-    totalPrice: '100.00'
+    totalPrice: '3.99'
   };
 
   let gpayClient = false;
 
+
+  function processPayment(paymentData) {
+    console.log(paymentData)
+  }
+
+  function getGooglePaymentDataConfiguration() {
+    return {
+      merchantId: '0123456789',
+      paymentMethodTokenizationParameters: tokenizationParameters,
+      allowedPaymentMethods: allowedPaymentMethods,
+      cardRequirements: {
+        allowedCardNetworks: allowedCardNetworks
+      },
+      emailRequired: true,
+      shippingAddressRequired: true,
+    };
+  }
+
+  function prefetchGooglePaymentData() {
+    const paymentDataRequest = getGooglePaymentDataConfiguration();
+    paymentDataRequest.transactionInfo = {
+      totalPriceStatus: 'NOT_CURRENTLY_KNOWN',
+      currencyCode: 'USD'
+    };
+    const paymentsClient = getGooglePaymentsClient();
+    paymentsClient.prefetchPaymentData(paymentDataRequest);
+  }
+
   function onGooglePaymentButtonClicked() {
+    const paymentDataRequest = getGooglePaymentDataConfiguration();
+    paymentDataRequest.transactionInfo = transactionInfo;
+
+    const paymentsClient = getGooglePaymentsClient();
+    paymentsClient.loadPaymentData(paymentDataRequest)
+      .then(function(paymentData) {
+        processPayment(paymentData);
+      })
+      .catch(function(err) {
+        console.error(err);
+      });
   }
 
   function addGooglePayButton() {
     const button = getGooglePaymentsClient().createButton({
       onClick: onGooglePaymentButtonClicked,
-      buttonType: 'short',
-      buttonColor: 'black',
+      buttonType: 'long',
+      buttonColor: 'white',
     });
 
     document.getElementById('container').appendChild(button);
@@ -95,7 +132,7 @@
         console.log('response', response);
         if(response.result) {
           addGooglePayButton();
-<!--          prefetchGooglePaymentData();-->
+          prefetchGooglePaymentData();
         }
       })
       .catch(function(err) {
@@ -114,5 +151,6 @@
 
 <script async src="https://pay.google.com/gp/p/js/pay.js" onload="onGooglePayLoaded()">
 </script>
+<script src="js/shoppingCartPage.js"></script>
 
 [[end]]
